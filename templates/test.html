@@ -1,15 +1,16 @@
 {% extends "layout.html" %} {% block content %}
 
 <div class="row">
-    <div class="col-sm-4">
-        <div class="board">
-            <h3 class="board_title"><input id="title" placeholder="Title"></h3>
-            <textarea id="description" placeholder="Description" data-toggle="tooltip" title="The description." rows=3 cols=50 maxlength="120"></textarea>
+    <div class="col-sm-4 board" id="board1">
+        <h3 class="board_title"><input id="title" placeholder="Title"></h3>
+        <textarea id="description" placeholder="Description" data-toggle="tooltip" title="The description." rows=1 cols=50 maxlength="120"></textarea>
+        <div class="col-sm-1">
+            <button class="button" id="save">Save</button>
         </div>
     </div>
 </div>
 <div class="col-sm-1">
-    <div id="button-div">Save</div>
+    <button class="button" id="new">New</button>
 </div>
 
 {% endblock %}

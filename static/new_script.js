@@ -10,4 +10,7 @@ $(document).ready(function() {
             $(this).removeClass('active')
         }
     );
+    $("#button-div").click(function() {
+        alarm("hey!")
+    });
 });

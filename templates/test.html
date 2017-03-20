@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %} {% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>ProMan</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/local_storage_script.js"></script>
-</head>
-
-<body>
-    <div class="boarddiv" id="boarddiv1">
-        <textarea id="board1" name="board1" placeholder="Write something" data-toggle="tooltip" title="Write here something" rows=1 cols=80 maxlength="70" required="required"></textarea>
-
+<div class="row">
+    <div class="col-sm-4">
+        <div class="board">
+            <h3 class="board_title">Project title</h3>
+        </div>
     </div>
-    <div class="boarddiv" id="boarddiv2">
-        <textarea id="board2" name="board2" placeholder="Write something" data-toggle="tooltip" title="Write here something" rows=1 cols=80 maxlength="70" required="required"></textarea>
-    </div id="button">
-    <button id="save">Save</button>
-    </div>
+</div>
+<div class="col-sm-1">
+    <div id="button-div">+</div>
+</div>
 
-</body>
-
-</html>
+{% endblock %}

@@ -8,9 +8,21 @@ $(document).ready(function() {
         },
         function() {
             $(this).removeClass('active')
-        }
-    );
+        });
+    if (localStorage["board"]) {
+        var jsonBoard = localStorage["board"];
+        var board = JSON.parse(jsonBoard);
+        document.getElementById("title").value = board.title;
+        document.getElementById("description").value = board.description;
+    };
     $("#button-div").click(function() {
-        alarm("hey!")
+        alert("click");
+        var Board = {
+            title: document.getElementById("title").value,
+            description: document.getElementById("description").value
+        };
+        var jsonBoard = JSON.stringify(Board);
+        localStorage.setItem("board", jsonBoard);
+        alert("Saved!")
     });
 });

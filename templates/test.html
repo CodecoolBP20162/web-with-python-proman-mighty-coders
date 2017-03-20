@@ -3,12 +3,13 @@
 <div class="row">
     <div class="col-sm-4">
         <div class="board">
-            <h3 class="board_title">Project title</h3>
+            <h3 class="board_title"><input id="title" placeholder="Title"></h3>
+            <textarea id="description" placeholder="Description" data-toggle="tooltip" title="The description." rows=3 cols=50 maxlength="120"></textarea>
         </div>
     </div>
 </div>
 <div class="col-sm-1">
-    <div id="button-div">+</div>
+    <div id="button-div">Save</div>
 </div>
 
 {% endblock %}

@@ -1,13 +1,22 @@
-.card-overlay {
+.board {
     border-radius: 5px;
     background-color: #ABCDEF;
     transition: background-color 0.5s ease;
-    font-size: 25px;
-    padding: 20px;
     border: 1px solid #ccc;
     margin-top: 10px;
-    display: inline-table;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: block;
+    max-height: 150px;
+    height: 150px;
+    overflow: hidden;
 }
+
+.board_title {
+    text-align: center;
+}
+
 .active {
     background-color:#8697a8;
 }

@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 $(document).ready(function() {
-    $('.card-overlay').hover(
+    $('.board').hover(
         function() {
             $(this).addClass('active')
         },

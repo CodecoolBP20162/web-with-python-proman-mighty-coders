@@ -46,11 +46,26 @@ var display = function () {
 
 
 $(document).ready(function () {
-    display()
+    display();
+    $('#save_board_button').attr("disabled", "disabled");
 });
+
+
 $('#save_board_button').click(function () {
     var title = $('#new_board_title').val();
     create(title);
-    $('#new_board_title').val('');
 });
 
+
+$('#new_board_title').keydown(function () {
+    if ($('#new_board_title').val().length > 0) {
+
+        $('#save_board_button').removeAttr("disabled");
+    }
+});
+
+
+$("#create_board_modal").on("hidden.bs.modal", function () {
+    $('#new_board_title').val('');
+    $('#save_board_button').attr("disabled", "disabled");
+})

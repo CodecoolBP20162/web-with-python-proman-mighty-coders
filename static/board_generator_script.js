@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 $(document).ready(function() {
-    var boardTemplate = $('<div class="board"><h3 class="board_title">Project title</h3></div>');
+    var boardTemplate = '<div class="col-sm-4"><div class="board"><h3 class="board_title">Project title</h3></div></div>';
     if (localStorage["board"]) {
         var jsonBoard = localStorage["board"];
         var importBoard = JSON.parse(jsonBoard);
@@ -28,7 +28,7 @@ $(document).ready(function() {
     //     alert("Saved!");
     //
     // });
-    
+
     $(".circle").click(function() {
         if ($(".board")[0]) {
             // var num = parseInt($(".col-sm-4:last").attr("id").match(/(\d+)$/)[0], 10) + 1;

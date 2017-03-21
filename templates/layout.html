@@ -7,17 +7,24 @@
     <link rel="stylesheet" href="/static/style.css">
 
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top bg-primary">
-  <div class="container text-center">
-    <div class="brand">
-        <div class="col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
-          <a class="navbar-brand" href="{{ url_for('index') }}" ><p class="text-center text-">ProMan</p></a>
-        </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container text-center">
+            <div class="brand">
+                <div class="col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
+                  <a a class="navbar-brand" href="{{ url_for('index') }}" ><p class="text-center" >ProMan</p></a>
+                </div>
+            </div>
+          </div>
+        </nav>
     </div>
-  </div>
-</nav>
+</div>
 {% block content %}{% endblock %}
+
     <div class="footer navbar-fixed-bottom bg-primary">
         <div class="row">
             <div class="col-md-11 offset1 ">
@@ -31,6 +38,7 @@
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/script.js"></script>
+
 
 </body>
 </html>

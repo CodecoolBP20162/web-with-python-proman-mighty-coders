@@ -3,32 +3,18 @@
  */
 $(document).ready(function() {
     var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
-    var boardsArray = []
-    if (localStorage["boards"]) {
-        var jsonBoard = localStorage["boards"];
-        var importBoard = JSON.parse(jsonBoard);
-        var newBoard = boardTemplate;
-        newBoard.children().find('.board_title').val(importBoard.title);
-        $("#board_row").append(newBoard);
-    } else {
-        if ($(".board")[0]) {
-            var newBoard = boardTemplate;
+    if (localStorage.length > 0) {
+        for (var i = 0; i < localStorage.length; i++) {
+            var importBoard = localStorage.getItem(localStorage.key(i))
+            var jsonBoard = JSON.parse(importBoard);
+            var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
+            newBoard.children().find('#title').prop("id", jsonBoard.title_id);
             $("#board_row").append(newBoard);
-        } else {
-            $("#board_row").append('<div class="col-sm-12" id="no_boards">There are no boards in the system. Start working now!</div>');
+            document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
         };
+    } else {
+        $("#board_row").append('<div class="col-sm-12" id="no_boards">There are no boards in the system. Start working NOW!</div>');
     };
-
-    // $(document).on("click", "#save", function() {
-    //     alert("Click");
-    //     var Board = {
-    //         title: $(this).parents().find('.board_title').html(),
-    //     };
-    //     var jsonBoard = JSON.stringify(Board);
-    //     localStorage.setItem("board", jsonBoard);
-    //     alert("Saved!");
-    //
-    // });
 
     $(".circle").click(function() {
         if ($(".board")[0]) {
@@ -38,6 +24,13 @@ $(document).ready(function() {
             $("#board_row").append(newBoard);
             var title = window.prompt("Please give the board title:");
             document.getElementById("title" + num).innerHTML = title;
+            var boardDict = {
+                board_id: document.getElementById("board" + num).id,
+                title_id: document.getElementById("title" + num).id,
+                title: document.getElementById("title" + num).innerHTML
+            }
+            var jsonBoard = JSON.stringify(boardDict);
+            localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
         } else {
             $("#no_boards").remove();
             var newBoard = $(boardTemplate).prop("id", "board" + 1);
@@ -45,8 +38,14 @@ $(document).ready(function() {
             $("#board_row").append(newBoard);
             var title = window.prompt("Please give the board title:");
             document.getElementById("title" + 1).innerHTML = title;
-        }
-        alert("Created!");
+            var boardDict = {
+                board_id: document.getElementById("board" + 1).id,
+                title_id: document.getElementById("title" + 1).id,
+                title: document.getElementById("title" + 1).innerHTML
+            };
+            var jsonBoard = JSON.stringify(boardDict);
+            localStorage.setItem(document.getElementById("board" + 1).id, jsonBoard);
+        };
     });
 
 });

@@ -2,7 +2,8 @@
  * Created by okocsis90 on 2017.03.20..
  */
 $(document).ready(function() {
-    var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title">Project title</h3></div></div>';
+    var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+    var boardsArray = []
     if (localStorage["boards"]) {
         var jsonBoard = localStorage["boards"];
         var importBoard = JSON.parse(jsonBoard);
@@ -33,11 +34,17 @@ $(document).ready(function() {
         if ($(".board")[0]) {
             var num = parseInt($(".col-sm-4:last").attr("id").match(/(\d+)$/)[0], 10) + 1;
             var newBoard = $(boardTemplate).prop("id", "board" + num);
+            newBoard.children().find('#title').prop("id", "title" + num);
             $("#board_row").append(newBoard);
+            var title = window.prompt("Please give the board title:");
+            document.getElementById("title" + num).innerHTML = title;
         } else {
             $("#no_boards").remove();
             var newBoard = $(boardTemplate).prop("id", "board" + 1);
+            newBoard.children().find('#title').prop("id", "title" + 1);
             $("#board_row").append(newBoard);
+            var title = window.prompt("Please give the board title:");
+            document.getElementById("title" + 1).innerHTML = title;
         }
         alert("Created!");
     });

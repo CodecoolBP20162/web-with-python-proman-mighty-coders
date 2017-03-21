@@ -1,0 +1,28 @@
+.board {
+    border-radius: 5px;
+    background-color: #ABCDEF;
+    transition: background-color 0.5s ease;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: block;
+    max-height: 150px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.board_title {
+    text-align: center;
+}
+
+.active {
+    background-color: #8697a8;
+}
+
+.button {
+    border-radius: 30px;
+    margin: 10px;
+    background-color: #d66866;
+}

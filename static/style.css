@@ -29,9 +29,9 @@ body {
 
 .circle {
     transition: background-color 0.5s ease;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
     background-color: #003399;
     display: inline-table;
     vertical-align: middle;

@@ -13,28 +13,34 @@
 
 <body>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="brand">
-                        <div class="col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
-                            <a a class="navbar-brand" href="{{ url_for('index') }}">
-                                <p>ProMan</p>
-                            </a>
-                        </div>
-                    </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar_main">
+          <div class="container text-center">
+            <div class="brand">
+                <div class="col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
+                  <a a class="navbar-brand" href="{{ url_for('index') }}" ><p class="text-center" id="navbar_brand">ProMan</p></a>
                 </div>
+            </div>
+          </div>
             </nav>
         </div>
     </div>
-    {% block content %}{% endblock %}
-    <div class="footer navbar-fixed-bottom">
-        <p>Brought to you by Mighty Coders</p>
-    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/board_script.js"></script>
+{% block content %}{% endblock %}
+
+<div class="footer navbar-fixed-bottom bg-primary" id="navbar_footer">
+    <div class="row">
+        <div class="col-md-11 offset1 ">
+            <div class="text-right">
+                <p class="text-right">Brought to you by Mighty Coders</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 </body>

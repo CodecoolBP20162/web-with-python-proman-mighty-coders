@@ -1,6 +1,42 @@
-{% extends 'layout.html' %}
-{% block content %}
+{% extends 'layout.html' %} {% block content %}
 
+<div class="col-sm-10"></div>
+<div class="col-sm-1">
+    <button id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_board_modal">
+        <div class="circle">
+            <div class="circle_element">+</div>
+        </div>
+    </button>
+</div>
+<div class="col-sm-1"></div>
+
+
+<div class="row" id="board_row">
+
+</div>
+
+
+<!-- Modal -->
+<div id="create_board_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add new board</h4>
+      </div>
+      <div class="modal-body">
+          <label>Board title:</label>
+          <input required minlength="1" id="new_board_title" type="text" maxlength="20" placeholder="Title">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="save_board_button" type="button" class="btn btn-info" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock %}

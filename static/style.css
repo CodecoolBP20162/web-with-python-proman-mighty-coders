@@ -44,7 +44,11 @@ body {
     font-size: 40px;
 }
 
-.active {
+.board:hover, .circle:hover {
     background-color: #002266;
 }
 
+#modal_button {
+    border: none;
+    background-color: transparent;
+}

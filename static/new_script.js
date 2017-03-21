@@ -2,6 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 $(document).ready(function() {
+    var boardTemplate = $('<div class="col-sm-4" id="board1"><div class="board"><h3 class="board_title"><input id="title" placeholder="Title"></h3><textarea id="description" placeholder="Description" data-toggle="tooltip" title="The description." rows=1 cols=50 maxlength="120"></textarea><div class="col-sm-1"><button class="button" id="save">Save</button></div></div></div>');
     $('.board').hover(
         function() {
             $(this).addClass('active')
@@ -11,10 +12,13 @@ $(document).ready(function() {
         });
     if (localStorage["board"]) {
         var jsonBoard = localStorage["board"];
-        var board = JSON.parse(jsonBoard);
-        document.getElementById("title").value = board.title;
-        document.getElementById("description").value = board.description;
-    };
+        var importBoard = JSON.parse(jsonBoard);
+        var newBoard = boardTemplate
+        newBoard.children().find('#title').val(importBoard.title);
+        newBoard.children().find('#description').val(importBoard.description);
+        $(".row").append(newBoard);
+    } else { var newBoard = boardTemplate;
+        $(".row").append(newBoard) };
     $("#save").click(function() {
         var Board = {
             title: document.getElementById("title").value,
@@ -25,11 +29,11 @@ $(document).ready(function() {
         alert("Saved!")
     });
     $("#new").click(function() {
-        var num = parseInt($(".board:last").attr("id").match(/(\d+)$/)[0], 10) + 1;
-        var newBoard = $(".board:last").clone(true, true).prop("id", "board" + num);
-        newBoard.find('#title').val("");
-        newBoard.find('#description').val("");
-        newBoard.insertAfter(".board:last");
+        var num = parseInt($(".col-sm-4:last").attr("id").match(/(\d+)$/)[0], 10) + 1;
+        var newBoard = $(".col-sm-4:last").clone(true, true).prop("id", "board" + num);
+        newBoard.children().find('#title').val("");
+        newBoard.children().find('#description').val("");
+        newBoard.insertAfter(".col-sm-4:last");
         alert("Created!")
     });
 });

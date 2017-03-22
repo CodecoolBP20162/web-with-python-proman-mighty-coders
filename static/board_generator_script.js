@@ -72,5 +72,6 @@ $("#create_board_modal").on("hidden.bs.modal", function() {
 
 $(document).on("click", ".board", function() {
     var boardTitle = $(this).text();
-    location.href = '/details/' + boardTitle;
+    var boardID = $(this).parent().attr('id')
+    location.href = '/details/' + boardID + ": " + boardTitle;
 });

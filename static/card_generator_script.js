@@ -1,5 +1,18 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data_status="new" data_order="non">Card title</li>';
 
+var getID = function() {
+    var titleData = document.getElementById("boardData").innerHTML;
+    var boardID = titleData.substring(0, titleData.indexOf(':'));
+    return boardID
+};
+
+var formatTitle = function() {
+    var forDelete = getID() + ':'
+    var titleData = document.getElementById("boardData").innerHTML;
+    var newTitle = titleData.replace(forDelete, "");
+    document.getElementById("boardCardsTitle").innerHTML = newTitle;
+};
+
 var create = function(title) {
     var num;
     if ($(".card")[0]) {
@@ -12,7 +25,7 @@ var create = function(title) {
         num = "0" + num
     }
     var newCard = $(cardTemplate).prop("id", "card" + num);
-    var parentBoard = document.getElementById("boardCardsTitle").innerHTML
+    var parentBoard = getID()
     newCard.attr("data-parent-board", parentBoard);
     $("#new").append(newCard);
     document.getElementById("card" + num).innerHTML = title;
@@ -51,3 +64,5 @@ $(".status_list").sortable().droppable().on('sortreceive', function() {
     };
 
 });
+
+formatTitle()

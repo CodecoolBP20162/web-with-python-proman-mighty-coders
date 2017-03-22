@@ -4,7 +4,7 @@
 
 var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
 
-var create = function (title) {
+var create = function(title) {
     var num;
     if ($(".board")[0]) {
         num = parseInt($(".col-sm-4:last").attr("id").match(/\d+/)) + 1;
@@ -29,7 +29,7 @@ var create = function (title) {
 };
 
 
-var display = function () {
+var display = function() {
     if (localStorage.length > 0) {
         for (var i = 0; i < localStorage.length; i++) {
             var importBoard = localStorage.getItem(localStorage.key(i));
@@ -45,19 +45,19 @@ var display = function () {
 };
 
 
-$(document).ready(function () {
+$(document).ready(function() {
     display();
     $('#save_board_button').attr("disabled", "disabled");
 });
 
 
-$('#save_board_button').click(function () {
+$('#save_board_button').click(function() {
     var title = $('#new_board_title').val();
     create(title);
 });
 
 
-$('#new_board_title').keydown(function () {
+$('#new_board_title').keydown(function() {
     if ($('#new_board_title').val().length > 0) {
 
         $('#save_board_button').removeAttr("disabled");
@@ -65,7 +65,12 @@ $('#new_board_title').keydown(function () {
 });
 
 
-$("#create_board_modal").on("hidden.bs.modal", function () {
+$("#create_board_modal").on("hidden.bs.modal", function() {
     $('#new_board_title').val('');
     $('#save_board_button').attr("disabled", "disabled");
-})
+});
+
+$(document).on("click", ".board", function() {
+    var boardTitle = $(this).text();
+    location.href = '/details/' + boardTitle;
+});

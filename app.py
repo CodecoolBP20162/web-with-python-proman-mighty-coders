@@ -8,9 +8,10 @@ def index():
     return render_template('boards.html')
 
 
-@app.route("/board_details")
-def board_details():
-    return render_template('board_details.html')
+@app.route("/details/<board_title>")
+def board_details(board_title):
+    title = board_title
+    return render_template('board_details.html', title=title)
 
 
 if __name__ == "__main__":

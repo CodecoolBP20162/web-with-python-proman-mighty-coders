@@ -1,4 +1,4 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-satus="new" data-order="non">Card title</li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data_status="new" data_order="non">Card title</li>';
 
 var create = function(title) {
     var num;
@@ -13,9 +13,7 @@ var create = function(title) {
     }
     var newCard = $(cardTemplate).prop("id", "card" + num);
     var parentBoard = document.getElementById("boardCardsTitle").innerHTML
-    console.log(parentBoard)
-    newCard.prop("data-parent-board", parentBoard);
-    newCard.attr("data-parent-board", parentBoard)
+    newCard.attr("data-parent-board", parentBoard);
     $("#new").append(newCard);
     document.getElementById("card" + num).innerHTML = title;
     $(".status_list").sortable("refresh");
@@ -42,4 +40,14 @@ $(function() {
     $("#new, #in_progress, #review, #done").sortable({
         connectWith: ".status_list"
     }).disableSelection();
+});
+
+$(".status_list").sortable().droppable().on('sortreceive', function() {
+    cards = this.getElementsByClassName("card");
+    for (var i = 0; i < cards.length; ++i) {
+        document.getElementById(cards[i].id).data_status = this.id;
+        card = document.getElementById(cards[i].id)
+        console.log(card.data_status)
+    };
+
 });

@@ -1,6 +1,52 @@
 {% extends 'layout.html' %} {% block content %}
 
 
-<h1>{{ title }}</h1>
 
+<h1 class=boardCardsTitle>{{ title }}</h1>
+
+<section class=sectioner>
+    <div class="status_header">New</div>
+    <ul id="new" class="status_list">
+        <li class="card">Item 1</li>
+        <li class="card">Item 2</li>
+        <li class="card">Item 3</li>
+        <li class="card">Item 4</li>
+        <li class="card">Item 5</li>
+    </ul>
+</section>
+
+<section class=sectioner>
+    <div class="status_header">In Progress</div>
+    <ul id="in_progress" class="status_list">
+        <li class="card">Item 1</li>
+        <li class="card">Item 2</li>
+        <li class="card">Item 3</li>
+        <li class="card">Item 4</li>
+        <li class="card">Item 5</li>
+    </ul>
+</section>
+<section class=sectioner>
+    <div class="status_header">Review</div>
+    <ul id="review" class="status_list">
+        <li class="card">Item 1</li>
+        <li class="card">Item 2</li>
+        <li class="card">Item 3</li>
+        <li class="card">Item 4</li>
+        <li class="card">Item 5</li>
+    </ul>
+</section>
+<section class=sectioner>
+    <div class="status_header">Done</div>
+    <ul id="done" class="status_list">
+        <li class="card">Item 1</li>
+        <li class="card">Item 2</li>
+        <li class="card">Item 3</li>
+        <li class="card">Item 4</li>
+        <li class="card">Item 5</li>
+    </ul>
+</section>
+
+
+{% endblock %} {% block scripts %}
+<script type="text/javascript" src="/static/card_generator_script.js"></script>
 {% endblock %}

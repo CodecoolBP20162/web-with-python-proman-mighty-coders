@@ -43,10 +43,3 @@ $(function() {
         connectWith: ".status_list"
     }).disableSelection();
 });
-
-$(function() {
-    $("#new, #in_progress, #review, #done").sortable({
-        connectWith: ".status_list",
-        dropOnEmpty: true
-    }).disableSelection();
-});

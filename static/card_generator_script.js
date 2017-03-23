@@ -19,7 +19,7 @@ var orderCards = function(list) {
     list.sort(sort_list);
 
     function sort_list(a, b) {
-        return (parseInt(b["data-order"]) < parseInt(a["data-order"])) ? 1 : -1;
+        return (b.attr("data-order") < a.attr("data-order")) ? (1) : (-1);
     }
 };
 

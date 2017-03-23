@@ -4,7 +4,7 @@
 
 var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
 
-function localStorage() {
+function toLocalStorage() {
     this.save = function(num) {
         var boardObject = {
         board_id: document.getElementById("board" + num).id,
@@ -22,8 +22,8 @@ function localStorage() {
 function Proxy(currentObject) {
     this.imp = new currentObject();
 
-    this.proxySave = function() {
-        this.imp.save()
+    this.proxySave = function(num) {
+        this.imp.save(num)
     }
 
 };
@@ -46,8 +46,8 @@ var create = function(title) {
     newBoard.children().find('#title').prop("id", "title" + num);
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
-    p = new Proxy(localStorage);
-    p.save(num);
+    var proxyObject = new Proxy(toLocalStorage);
+    proxyObject.proxySave(num);
 };
 
 

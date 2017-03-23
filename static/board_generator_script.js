@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
 var proxyObject = new Proxy(handlingLocalStorage);
 
 
@@ -48,7 +48,7 @@ function Proxy(currentObject) {
 var create = function(title) {
     var num;
     if ($(".board")[0]) {
-        num = parseInt($(".col-sm-4:last").attr("id").match(/\d+/)) + 1;
+        num = parseInt($(".col-sm-3:last").attr("id").match(/\d+/)) + 1;
     } else {
         $("#no_boards").remove();
         num = 1

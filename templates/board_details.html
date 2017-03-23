@@ -1,8 +1,25 @@
 {% extends 'layout.html' %} {% block content %}
 
-
 <div id="boardData" hidden>{{ title }}</div>
-<h1 class="boardCardsTitle" id="boardCardsTitle"></h1>
+
+<div class="row">
+    <div class="col-sm-2">
+        <a href="{{ url_for('index') }}">
+        <span class="glyphicon glyphicon-arrow-left" title="Back"></span>
+        </a>
+    </div>
+    <div class="col-sm-8"><h1 class="boardCardsTitle" id="boardCardsTitle"></h1></div>
+    <div class="col-sm-2">
+        <button title="Add new" id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_card_modal">
+            <div class="circle">
+                <div class="circle_element">+</div>
+            </div>
+        </button>
+
+    </div>
+
+</div>
+
 
 <section class="sectioner">
     <div class="status_header">New</div>
@@ -25,16 +42,6 @@
     <ul id="done" class="status_list">
     </ul>
 </section>
-
-<div class="col-sm-10"></div>
-<div class="col-sm-1">
-    <button id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_card_modal">
-        <div class="circle">
-            <div class="circle_element">+</div>
-        </div>
-    </button>
-</div>
-<div class="col-sm-1"></div>
 
 <!-- Modal -->
 <div id="create_card_modal" class="modal fade" role="dialog">

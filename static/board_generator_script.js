@@ -36,12 +36,14 @@ var create = function(title) {
 var display = function() {
     if (localStorage.length > 0) {
         for (var i = 0; i < localStorage.length; i++) {
-            var importBoard = localStorage.getItem(localStorage.key(i));
-            var jsonBoard = JSON.parse(importBoard);
-            var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
-            newBoard.children().find('#title').prop("id", jsonBoard.title_id);
-            $("#board_row").append(newBoard);
-            document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
+            if (localStorage.key(i).includes("board")) {
+                var importBoard = localStorage.getItem(localStorage.key(i));
+                var jsonBoard = JSON.parse(importBoard);
+                var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
+                newBoard.children().find('#title').prop("id", jsonBoard.title_id);
+                $("#board_row").append(newBoard);
+                document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
+            }
         }
     } else {
         $("#board_row").append('<div class="col-sm-12" id="no_boards">There are no boards in the system. Start working NOW!</div>');

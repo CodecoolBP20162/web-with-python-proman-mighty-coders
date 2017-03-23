@@ -1,4 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
+var proxyObject = new Proxy(handlingLocalStorage);
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
@@ -15,11 +16,8 @@ var formatTitle = function() {
 };
 
 function handlingLocalStorage() {
-
-}
-
-var saveCardToLocal = function(card) {
-    var cardObject = {
+    this.save = function (card) {
+        var cardObject = {
         card_id: card.attr("id"),
         title: card.html(),
         parent_board: card.attr("data-parent-board"),
@@ -28,13 +26,14 @@ var saveCardToLocal = function(card) {
     };
     var jsonCard = JSON.stringify(cardObject);
     localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
-};
+    }
+}
 
 
 function Proxy(currentObject) {
     this.imp = new currentObject();
-    this.proxySave = function(num) {
-        this.imp.save(num)
+    this.proxySave = function(card) {
+        this.imp.save(card)
     };
     this.proxyLoad = function() {
         this.imp.load()
@@ -68,7 +67,7 @@ var create = function(title) {
     newCard.html(title);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
-    saveCardToLocal($("#card" + num));
+    proxyObject.save($("#card" + num));
 };
 
 var display = function() {

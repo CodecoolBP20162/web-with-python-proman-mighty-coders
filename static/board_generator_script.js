@@ -7,7 +7,7 @@ var proxyObject = new Proxy(handlingLocalStorage);
 
 
 function handlingLocalStorage() {
-    this.save = function (num) {
+    this.save = function(num) {
         var boardObject = {
             board_id: document.getElementById("board" + num).id,
             title_id: document.getElementById("title" + num).id,
@@ -17,7 +17,7 @@ function handlingLocalStorage() {
         localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
     };
 
-    this.load = function () {
+    this.load = function() {
         if (localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++) {
                 if (localStorage.key(i).includes("board")) {
@@ -70,6 +70,10 @@ var display = function() {
 $(document).ready(function() {
     display();
     $('#save_board_button').attr("disabled", "disabled");
+});
+
+$('.modal').on('shown.bs.modal', function() {
+    $(this).find('[autofocus]').focus();
 });
 
 $('#save_board_button').click(function() {

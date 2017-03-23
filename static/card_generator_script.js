@@ -121,6 +121,11 @@ $(document).ready(function() {
     $('#save_card_button').attr("disabled", "disabled");
 });
 
+
+$('.modal').on('shown.bs.modal', function() {
+    $(this).find('[autofocus]').focus();
+});
+
 $('#save_card_button').click(function() {
     var title = $('#new_card_title').val();
     create(title);
@@ -142,6 +147,7 @@ $(function() {
         connectWith: ".status_list"
     }).disableSelection();
 });
+
 
 $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
     cards = this.getElementsByClassName("card");

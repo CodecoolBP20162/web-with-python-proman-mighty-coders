@@ -85,18 +85,23 @@ var searchMaxId = function(element, checkNumberFrom) {
 
 var create = function(title) {
     var num;
+    var order;
     if ($(".card")[0]) {
         var maxId = searchMaxId("card", 4);
         num = maxId + 1;
+        order = parseInt($("#new").children().last().attr("data-order")) + 1;
+
     } else {
         $("#no_cards").remove();
         num = 1
+        order = 1
     }
     if (num < 10) {
         num = "0" + num
     }
     var newCard = $(cardTemplate);
     newCard.attr("id", "card" + num);
+    newCard.attr("data-order", order);
     var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
     newCard.html(title);
@@ -115,6 +120,7 @@ $(document).ready(function() {
     display();
     $('#save_card_button').attr("disabled", "disabled");
 });
+
 
 $('.modal').on('shown.bs.modal', function() {
     $(this).find('[autofocus]').focus();
@@ -142,16 +148,19 @@ $(function() {
     }).disableSelection();
 });
 
-$(".status_list").sortable().droppable().on('sortreceive', function() {
+
+$(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
     cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
         card = $(cards[i])
+        card.attr('data-order', i + 1)
         card.attr('data-status', this.id);
+        console.log(card.attr('data-order'))
         parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
         localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
         proxyObject.proxySave($(cards[i]));
         console.log(cards[i].getAttribute("data-status"));
-    }
+    };
 });
 
 formatTitle();

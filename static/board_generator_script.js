@@ -4,15 +4,32 @@
 
 var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
 
-var saveBoard = function(num) {
-   var boardObject = {
+function localStorage() {
+    this.save = function(num) {
+        var boardObject = {
         board_id: document.getElementById("board" + num).id,
         title_id: document.getElementById("title" + num).id,
         title: document.getElementById("title" + num).innerHTML
     };
     var jsonBoard = JSON.stringify(boardObject);
     localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
+
+    };
+
+
+}
+
+function Proxy(currentObject) {
+    this.imp = new currentObject();
+
+    this.proxySave = function() {
+        this.imp.save()
+    }
+
 };
+
+
+
 
 var create = function(title) {
     var num;
@@ -29,7 +46,8 @@ var create = function(title) {
     newBoard.children().find('#title').prop("id", "title" + num);
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
-    saveBoard(num);
+    p = new Proxy(localStorage);
+    p.save(num);
 };
 
 

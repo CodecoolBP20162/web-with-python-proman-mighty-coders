@@ -1,4 +1,4 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data_order="non">Card title</li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
@@ -30,13 +30,17 @@ var create = function(title) {
     $("#new").append(newCard);
     document.getElementById("card" + num).innerHTML = title;
     $(".status_list").sortable("refresh");
-    /* var boardDict = {
-        board_id: document.getElementById("board" + num).id,
-        title_id: document.getElementById("title" + num).id,
-        title: document.getElementById("title" + num).innerHTML
+    var card = $("#card" + num)
+    var cardObject = {
+        card_id: card.attr("id"),
+        title: card.innerHTML,
+        parent_board: card.attr("data-parent-board"),
+        title: document.getElementById("card" + num).innerHTML,
+        status: card.attr("data-status"),
+        order: card.attr("data-order")
     };
-    var jsonBoard = JSON.stringify(boardDict);
-    localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);*/
+    var jsonCard = JSON.stringify(cardObject);
+    localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
 };
 
 

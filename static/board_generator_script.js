@@ -4,6 +4,16 @@
 
 var boardTemplate = '<div class="col-sm-4" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
 
+var saveBoard = function(num) {
+   var boardObject = {
+        board_id: document.getElementById("board" + num).id,
+        title_id: document.getElementById("title" + num).id,
+        title: document.getElementById("title" + num).innerHTML
+    };
+    var jsonBoard = JSON.stringify(boardObject);
+    localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
+};
+
 var create = function(title) {
     var num;
     if ($(".board")[0]) {
@@ -19,13 +29,7 @@ var create = function(title) {
     newBoard.children().find('#title').prop("id", "title" + num);
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
-    var boardDict = {
-        board_id: document.getElementById("board" + num).id,
-        title_id: document.getElementById("title" + num).id,
-        title: document.getElementById("title" + num).innerHTML
-    };
-    var jsonBoard = JSON.stringify(boardDict);
-    localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
+    saveBoard(num);
 };
 
 
@@ -72,6 +76,6 @@ $("#create_board_modal").on("hidden.bs.modal", function() {
 
 $(document).on("click", ".board", function() {
     var boardTitle = $(this).text();
-    var boardID = $(this).parent().attr('id')
+    var boardID = $(this).parent().attr('id');
     location.href = '/details/' + boardID + "%" + boardTitle;
 });

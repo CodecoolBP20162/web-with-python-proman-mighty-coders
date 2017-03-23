@@ -31,7 +31,7 @@ var create = function(title) {
     if ($(".card")[0]) {
         num = parseInt($(".card:last").attr("id").match(/\d+/)) + 1;
     } else {
-        //$("#no_cards").remove();
+        $("#no_cards").remove();
         num = 1
     }
     if (num < 10) {
@@ -46,28 +46,38 @@ var create = function(title) {
     saveCardToLocal($("#card" + num));
 };
 
-/*var display = function() {
+var display = function() {
     if (localStorage.length > 0) {
         for (var i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).includes(getID().substring(5, 7))) {
+            if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
                 var importCard = localStorage.getItem(localStorage.key(i));
-                var cardObject = JSON.parse(importBoard);
+                var cardObject = JSON.parse(importCard);
                 var newCard = $(cardTemplate);
                 newCard.attr("id", cardObject.card_id);
-                newCard.attr("id", cardObject.card_id)
-                newBoard.children().find('#title').prop("id", jsonBoard.title_id);
-                $("#board_row").append(newBoard);
-                document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
+                newCard.attr("data-parent-board", cardObject.parent_board);
+                newCard.attr("data-status", cardObject.status);
+                newCard.attr("data-order", cardObject.order);
+                newCard.html(cardObject.title);
+                if (newCard.attr("data-status") === "new") {
+                    $("#new").append(newCard);
+                } else if (newCard.attr("data-status") === "in_progress") {
+                    $("#in_progress").append(newCard);
+                } else if (newCard.attr("data-status") === "review") {
+                    $("#review").append(newCard);
+                } else {
+                    $("#done").append(newCard);
+                }
+
             }
         }
     } else {
-        $("#board_row").append('<div class="col-sm-12" id="no_boards">There are no boards in the system. Start working NOW!</div>');
+        $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
     }
-};*/
+};
 
 
 $(document).ready(function() {
-    //display();
+    display();
     $('#save_card_button').attr("disabled", "disabled");
 });
 

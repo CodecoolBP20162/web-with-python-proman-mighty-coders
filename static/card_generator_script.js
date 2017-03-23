@@ -75,10 +75,22 @@ $(function() {
 $(".status_list").sortable().droppable().on('sortreceive', function() {
     cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
-        $(cards[i]).attr('data-status', this.id);
+        card = $(cards[i])
+        card.attr('data-status', this.id);
+        parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
+        localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
+        var cardObject = {
+            card_id: card.attr("id"),
+            title: card.innerHTML,
+            parent_board: card.attr("data-parent-board"),
+            title: card.innerHTML,
+            status: card.attr("data-status"),
+            order: card.attr("data-order")
+        };
+        var jsonCard = JSON.stringify(cardObject);
+        localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
         console.log(cards[i].getAttribute("data-status"));
     };
-
 });
 
 formatTitle()

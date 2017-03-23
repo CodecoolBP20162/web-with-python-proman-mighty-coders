@@ -24,12 +24,21 @@ var saveCardToLocal = function(card) {
     };
     var jsonCard = JSON.stringify(cardObject);
     localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
-}
+};
+
 
 var create = function(title) {
     var num;
     if ($(".card")[0]) {
-        num = parseInt($(".card:last").attr("id").match(/\d+/)) + 1;
+        var allCards = document.getElementsByClassName("card");
+        var maxId = 0;
+        for (var i = 0; i < allCards.length; i++) {
+            var currentId = parseInt(allCards.item(i).id.substring(4));
+            if (currentId > maxId) {
+                maxId = currentId;
+            }
+        }
+        num = maxId + 1;
     } else {
         $("#no_cards").remove();
         num = 1
@@ -37,11 +46,12 @@ var create = function(title) {
     if (num < 10) {
         num = "0" + num
     }
-    var newCard = $(cardTemplate).prop("id", "card" + num);
+    var newCard = $(cardTemplate);
+    newCard.attr("id", "card" + num);
     var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
+    newCard.html(title);
     $("#new").append(newCard);
-    document.getElementById("card" + num).innerHTML = title;
     $(".status_list").sortable("refresh");
     saveCardToLocal($("#card" + num));
 };

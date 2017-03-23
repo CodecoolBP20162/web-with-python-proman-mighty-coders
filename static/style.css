@@ -101,3 +101,23 @@ body {
     padding-top: 5px;
 
 }
+
+.glyphicon-arrow-left {
+    font-size: 50px;
+    margin-left: 10px;
+    color: #3fb0ac;
+}
+
+.glyphicon-arrow-left:hover
+{
+    z-index: 2;
+    -webkit-transition: all 100ms ease-in;
+    -webkit-transform: scale(1.1);
+    -ms-transition: all 100ms ease-in;
+    -ms-transform: scale(1.1);
+    -moz-transition: all 100ms ease-in;
+    -moz-transform: scale(1.1);
+    transition: all 100ms ease-in;
+    transform: scale(1.1);
+    color: #173e43;
+}

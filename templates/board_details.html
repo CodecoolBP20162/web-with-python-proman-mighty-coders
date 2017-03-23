@@ -3,7 +3,11 @@
 <div id="boardData" hidden>{{ title }}</div>
 
 <div class="row">
-    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+        <a href="{{ url_for('index') }}">
+        <span class="glyphicon glyphicon-arrow-left" title="Back"></span>
+        </a>
+    </div>
     <div class="col-sm-8"><h1 class="boardCardsTitle" id="boardCardsTitle"></h1></div>
     <div class="col-sm-2">
         <button title="Add new" id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_card_modal">

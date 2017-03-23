@@ -128,7 +128,6 @@ $('#save_card_button').click(function() {
 
 $('#new_card_title').keydown(function() {
     if ($('#new_card_title').val().length > 0) {
-
         $('#save_card_button').removeAttr("disabled");
     }
 });

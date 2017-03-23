@@ -1,16 +1,23 @@
 {% extends 'layout.html' %} {% block content %}
-
-<div class="row" id="board_row">
-
+<div class=row>
+    <div class="col-sm-0"></div>
+    <div class="col-sm-10">
+        <div class=row id="board_row">
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button title="Add new" id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_board_modal">
+            <div class="circle">
+                <div class="circle_element">+</div>
+            </div>
+        </button>
+    </div>
 </div>
+
 
 <div class="col-sm-10"></div>
 <div class="col-sm-1">
-    <button id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_board_modal">
-        <div class="circle">
-            <div class="circle_element">+</div>
-        </div>
-    </button>
+
 </div>
 <div class="col-sm-1"></div>
 

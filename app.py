@@ -1,0 +1,18 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('boards.html')
+
+
+@app.route("/details/<board_title>")
+def board_details(board_title):
+    title = board_title
+    return render_template('board_details.html', title=title)
+
+
+if __name__ == "__main__":
+    app.run(host='127.0.0.1', port=5000, debug=True)

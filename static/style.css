@@ -1,0 +1,139 @@
+body {
+    padding-top: 65px;
+}
+
+#navbar_footer,
+#navbar_main {
+    background-color: #173e43;
+}
+
+.board {
+    border-radius: 5px;
+    background-color:#3fb0ac;
+    transition: background-color 0.5s ease;
+    margin: 10px;
+    display: block;
+    max-height: 100px;
+    height: 100px;
+    max-width: 270px;
+    width: 270px;
+    overflow: hidden;
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.board_title,
+#navbar_brand {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.circle {
+    transition: background-color 0.5s ease;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: #3fb0ac;
+    display: inline-table;
+    vertical-align: middle;
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.circle_element {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+
+}
+
+.board:hover,
+.circle:hover {
+    background-color:#173e43;
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.card:hover {
+    background-color: #173e43;
+}
+
+#modal_button {
+    border: none;
+    background-color: transparent;
+}
+
+.sectioner {
+    display: inline-block;
+    float: left;
+    width: 23%;
+    background-color: #dddfd4;
+    margin: 1%;
+    border-radius: 10px;
+}
+
+.boardCardsTitle {
+    text-align: center
+}
+
+.card {
+    border-radius: 5px;
+    background-color: #3fb0ac;
+    transition: background-color 0.5s ease;
+    margin: 5px;
+    display: block;
+    height: 30px;
+    overflow: hidden;
+    font-weight: bold;
+    color: white;
+    padding-left: 8px;
+    padding-top: 5px;
+}
+
+.status_list {
+    padding-bottom: 100px;
+    min-height: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+}
+
+.status_header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 5px;
+}
+
+.glyphicon-arrow-left {
+    font-size: 50px;
+    margin-left: 10px;
+    color: #3fb0ac;
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.glyphicon-arrow-left:hover
+{
+    z-index: 2;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    transform: scale(1.1);
+    color: #173e43;
+}

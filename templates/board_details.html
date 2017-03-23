@@ -1,0 +1,74 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div id="boardData" hidden>{{ title }}</div>
+
+<div class="row">
+    <div class="col-sm-2">
+        <a href="{{ url_for('index') }}">
+            <span class="glyphicon glyphicon-arrow-left" title="Back"></span>
+        </a>
+    </div>
+    <div class="col-sm-8">
+        <h1 class="boardCardsTitle" id="boardCardsTitle"></h1>
+    </div>
+    <div class="col-sm-2">
+        <button title="Add new" id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_card_modal">
+            <div class="circle">
+                <div class="circle_element">+</div>
+            </div>
+        </button>
+
+    </div>
+
+</div>
+
+
+<section class="sectioner">
+    <div class="status_header">New</div>
+    <ul id="new" class="status_list">
+    </ul>
+</section>
+
+<section class="sectioner">
+    <div class="status_header">In Progress</div>
+    <ul id="in_progress" class="status_list">
+    </ul>
+</section>
+<section class="sectioner">
+    <div class="status_header">Review</div>
+    <ul id="review" class="status_list">
+    </ul>
+</section>
+<section class="sectioner">
+    <div class="status_header">Done</div>
+    <ul id="done" class="status_list">
+    </ul>
+</section>
+
+<!-- Modal -->
+<div id="create_card_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add new card</h4>
+            </div>
+            <div class="modal-body">
+                <label>Card title:</label>
+                <input required minlength="1" id="new_card_title" type="text" maxlength="70" placeholder="Title" autofocus>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="save_card_button" type="button" class="btn btn-info" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %} {% block scripts %}
+<script type="text/javascript" src="/static/card_generator_script.js"></script>
+{% endblock %}

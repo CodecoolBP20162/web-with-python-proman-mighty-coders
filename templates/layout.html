@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProMan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+
+
+
+</head>
+
+<body>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar_main">
+                <div class="container text-center">
+                    <div class="brand">
+                        <div class="col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
+                            <a class="navbar-brand" href="{{ url_for('index') }}">
+                                <p class="text-center" id="navbar_brand">ProMan</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <div class="footer navbar-fixed-bottom bg-primary" id="navbar_footer">
+        <div class="row">
+            <div class="col-md-11 offset1 ">
+                <div class="text-right">
+                    <p class="text-right">Brought to you by Mighty Coders</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

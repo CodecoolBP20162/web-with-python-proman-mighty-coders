@@ -15,6 +15,14 @@ var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
 
+var orderCards = function(list) {
+    list.sort(sort_list);
+
+    function sort_list(a, b) {
+        return (parseInt(b["data-order"]) < parseInt(a["data-order"])) ? 1 : -1;
+    }
+};
+
 
 function handlingLocalStorage() {
     this.save = function(card) {
@@ -30,6 +38,10 @@ function handlingLocalStorage() {
     };
 
     this.load = function() {
+        newArray = []
+        progressArray = []
+        reviewArray = []
+        doneArray = []
         if (localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++) {
                 if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
@@ -42,20 +54,35 @@ function handlingLocalStorage() {
                     newCard.attr("data-order", cardObject.order);
                     newCard.html(cardObject.title);
                     if (newCard.attr("data-status") === "new") {
-                        $("#new").append(newCard);
+                        newArray.push(newCard);
                     } else if (newCard.attr("data-status") === "in_progress") {
-                        $("#in_progress").append(newCard);
+                        progressArray.push(newCard);
                     } else if (newCard.attr("data-status") === "review") {
-                        $("#review").append(newCard);
-                    } else {
-                        $("#done").append(newCard);
-                    }
-
-                }
-            }
+                        reviewArray.push(newCard);
+                    } else if (newCard.attr("data-status") === "done") {
+                        doneArray.push(newCard);
+                    };
+                };
+            };
+            orderCards(newArray);
+            orderCards(progressArray);
+            orderCards(reviewArray);
+            orderCards(doneArray);
+            for (var i = 0; i < newArray.length; i++) {
+                $("#new").append(newArray[i]);
+            };
+            for (var i = 0; i < progressArray.length; i++) {
+                $("#in_progress").append(progressArray[i]);
+            };
+            for (var i = 0; i < reviewArray.length; i++) {
+                $("#review").append(reviewArray[i]);
+            };
+            for (var i = 0; i < doneArray.length; i++) {
+                $("#done").append(doneArray[i]);
+            };
         } else {
             $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
-        }
+        };
     }
 }
 

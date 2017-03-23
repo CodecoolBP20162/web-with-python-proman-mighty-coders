@@ -1,4 +1,4 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data_status="new" data_order="non">Card title</li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data_order="non">Card title</li>';
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
@@ -71,9 +71,8 @@ $(function() {
 $(".status_list").sortable().droppable().on('sortreceive', function() {
     cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
-        document.getElementById(cards[i].id).data_status = this.id;
-        card = document.getElementById(cards[i].id)
-        console.log(card.data_status)
+        $(cards[i]).attr('data-status', this.id);
+        console.log(cards[i].getAttribute("data-status"));
     };
 
 });

@@ -2,12 +2,12 @@ var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board"
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
-    var boardID = titleData.substring(0, titleData.indexOf(':'));
+    var boardID = titleData.substring(0, titleData.indexOf('%'));
     return boardID
 };
 
 var formatTitle = function() {
-    var forDelete = getID() + ':'
+    var forDelete = getID() + '%'
     var titleData = document.getElementById("boardData").innerHTML;
     var newTitle = titleData.replace(forDelete, "");
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
@@ -39,14 +39,27 @@ var create = function(title) {
     localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);*/
 };
 
-/*$(document).ready(function() {
-    display();
+
+$(document).ready(function() {
+    //display();
     $('#save_card_button').attr("disabled", "disabled");
-});*/
+});
 
 $('#save_card_button').click(function() {
     var title = $('#new_card_title').val();
     create(title);
+});
+
+$('#new_card_title').keydown(function() {
+    if ($('#new_card_title').val().length > 0) {
+
+        $('#save_card_button').removeAttr("disabled");
+    }
+});
+
+$("#create_card_modal").on("hidden.bs.modal", function() {
+    $('#new_card_title').val('');
+    $('#save_card_button').attr("disabled", "disabled");
 });
 
 $(function() {

@@ -47,7 +47,8 @@ body {
 }
 
 .board:hover,
-.circle:hover {
+.circle:hover,
+.card:hover{
     background-color: #002266;
 }
 
@@ -57,8 +58,14 @@ body {
 }
 
 .sectioner {
+    display: inline-block;
     float: left;
-    width: 25%;
+    width: 23%;
+    background-color: gainsboro;
+    margin: 1%;
+    border-radius: 10px;
+
+
 }
 
 .boardCardsTitle {
@@ -67,19 +74,30 @@ body {
 
 .card {
     border-radius: 5px;
-    background-color: #4286f4;
+    background-color: #003399;
     transition: background-color 0.5s ease;
-    margin: 10px;
+    margin: 5px;
     display: block;
     height: 30px;
     overflow: hidden;
+    font-weight: bold;
+    color: white;
+    padding-left: 8px;
+    padding-top: 5px;
 }
 
 .status_list {
     padding-bottom: 100px;
     min-height: 100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
 }
 
 .status_header {
     text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 5px;
+
 }

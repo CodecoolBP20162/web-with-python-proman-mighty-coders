@@ -1,4 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
+var proxyObject = new Proxy(handlingLocalStorage);
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
@@ -13,12 +14,10 @@ var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
 
-// function handlingLocalStorage() {
-//
-// }
 
-var saveCardToLocal = function(card) {
-    var cardObject = {
+function handlingLocalStorage() {
+    this.save = function (card) {
+        var cardObject = {
         card_id: card.attr("id"),
         title: card.html(),
         parent_board: card.attr("data-parent-board"),
@@ -27,12 +26,42 @@ var saveCardToLocal = function(card) {
     };
     var jsonCard = JSON.stringify(cardObject);
     localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
-};
+    }
+
+    this.load = function() {
+        if (localStorage.length > 0) {
+        for (var i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
+                var importCard = localStorage.getItem(localStorage.key(i));
+                var cardObject = JSON.parse(importCard);
+                var newCard = $(cardTemplate);
+                newCard.attr("id", cardObject.card_id);
+                newCard.attr("data-parent-board", cardObject.parent_board);
+                newCard.attr("data-status", cardObject.status);
+                newCard.attr("data-order", cardObject.order);
+                newCard.html(cardObject.title);
+                if (newCard.attr("data-status") === "new") {
+                    $("#new").append(newCard);
+                } else if (newCard.attr("data-status") === "in_progress") {
+                    $("#in_progress").append(newCard);
+                } else if (newCard.attr("data-status") === "review") {
+                    $("#review").append(newCard);
+                } else {
+                    $("#done").append(newCard);
+                }
+
+            }
+        }
+    } else {
+        $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
+    }
+    }
+}
 
 function Proxy(currentObject) {
     this.imp = new currentObject();
-    this.proxySave = function(num) {
-        this.imp.save(num)
+    this.proxySave = function(card) {
+        this.imp.save(card)
     };
     this.proxyLoad = function() {
         this.imp.load()
@@ -73,36 +102,11 @@ var create = function(title) {
     newCard.html(title);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
-    saveCardToLocal($("#card" + num));
+    proxyObject.save($("#card" + num));
 };
 
 var display = function() {
-    if (localStorage.length > 0) {
-        for (var i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
-                var importCard = localStorage.getItem(localStorage.key(i));
-                var cardObject = JSON.parse(importCard);
-                var newCard = $(cardTemplate);
-                newCard.attr("id", cardObject.card_id);
-                newCard.attr("data-parent-board", cardObject.parent_board);
-                newCard.attr("data-status", cardObject.status);
-                newCard.attr("data-order", cardObject.order);
-                newCard.html(cardObject.title);
-                if (newCard.attr("data-status") === "new") {
-                    $("#new").append(newCard);
-                } else if (newCard.attr("data-status") === "in_progress") {
-                    $("#in_progress").append(newCard);
-                } else if (newCard.attr("data-status") === "review") {
-                    $("#review").append(newCard);
-                } else {
-                    $("#done").append(newCard);
-                }
-
-            }
-        }
-    } else {
-        $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
-    }
+    proxyObject.load();
 };
 
 

@@ -1,4 +1,4 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data_order="non">Card title</li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
@@ -6,12 +6,25 @@ var getID = function() {
     return boardID
 };
 
+
 var formatTitle = function() {
     var forDelete = getID() + '%'
     var titleData = document.getElementById("boardData").innerHTML;
     var newTitle = titleData.replace(forDelete, "");
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
+
+var saveCardToLocal = function(card) {
+    var cardObject = {
+        card_id: card.attr("id"),
+        title: card.html(),
+        parent_board: card.attr("data-parent-board"),
+        status: card.attr("data-status"),
+        order: card.attr("data-order")
+    };
+    var jsonCard = JSON.stringify(cardObject);
+    localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
+}
 
 var create = function(title) {
     var num;
@@ -25,19 +38,32 @@ var create = function(title) {
         num = "0" + num
     }
     var newCard = $(cardTemplate).prop("id", "card" + num);
-    var parentBoard = getID()
+    var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
     $("#new").append(newCard);
     document.getElementById("card" + num).innerHTML = title;
     $(".status_list").sortable("refresh");
-    /* var boardDict = {
-        board_id: document.getElementById("board" + num).id,
-        title_id: document.getElementById("title" + num).id,
-        title: document.getElementById("title" + num).innerHTML
-    };
-    var jsonBoard = JSON.stringify(boardDict);
-    localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);*/
+    saveCardToLocal($("#card" + num));
 };
+
+/*var display = function() {
+    if (localStorage.length > 0) {
+        for (var i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).includes(getID().substring(5, 7))) {
+                var importCard = localStorage.getItem(localStorage.key(i));
+                var cardObject = JSON.parse(importBoard);
+                var newCard = $(cardTemplate);
+                newCard.attr("id", cardObject.card_id);
+                newCard.attr("id", cardObject.card_id)
+                newBoard.children().find('#title').prop("id", jsonBoard.title_id);
+                $("#board_row").append(newBoard);
+                document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
+            }
+        }
+    } else {
+        $("#board_row").append('<div class="col-sm-12" id="no_boards">There are no boards in the system. Start working NOW!</div>');
+    }
+};*/
 
 
 $(document).ready(function() {
@@ -71,10 +97,13 @@ $(function() {
 $(".status_list").sortable().droppable().on('sortreceive', function() {
     cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
-        $(cards[i]).attr('data-status', this.id);
+        card = $(cards[i])
+        card.attr('data-status', this.id);
+        parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
+        localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
+        saveCardToLocal($(cards[i]));
         console.log(cards[i].getAttribute("data-status"));
     };
-
 });
 
 formatTitle()

@@ -123,7 +123,6 @@ $('#save_card_button').click(function () {
 
 $('#new_card_title').keydown(function () {
     if ($('#new_card_title').val().length > 0) {
-
         $('#save_card_button').removeAttr("disabled");
     }
 });
@@ -149,7 +148,6 @@ $(".status_list").sortable().droppable().on('sortreceive', function () {
         proxyObject.proxySave($(cards[i]));
         console.log(cards[i].getAttribute("data-status"));
     }
-    ;
 });
 
 formatTitle();

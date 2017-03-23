@@ -4,12 +4,12 @@ body {
 
 #navbar_footer,
 #navbar_main {
-    background-color: #262216;
+    background-color: #173e43;
 }
 
 .board {
     border-radius: 5px;
-    background-color: #49412c;
+    background-color:#3fb0ac;
     transition: background-color 0.5s ease;
     margin: 10px;
     display: block;
@@ -34,7 +34,7 @@ body {
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    background-color: #49412c;
+    background-color: #3fb0ac;
     display: inline-table;
     vertical-align: middle;
 }
@@ -49,7 +49,7 @@ body {
 .board:hover,
 .circle:hover,
 .card:hover{
-    background-color: #97743a;
+    background-color:#173e43;
 }
 
 #modal_button {
@@ -61,7 +61,7 @@ body {
     display: inline-block;
     float: left;
     width: 23%;
-    background-color: #b0a18e;
+    background-color: #dddfd4;
     margin: 1%;
     border-radius: 10px;
 
@@ -74,7 +74,7 @@ body {
 
 .card {
     border-radius: 5px;
-    background-color: #49412c;
+    background-color: #3fb0ac;
     transition: background-color 0.5s ease;
     margin: 5px;
     display: block;

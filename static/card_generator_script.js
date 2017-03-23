@@ -27,6 +27,35 @@ function handlingLocalStorage() {
     var jsonCard = JSON.stringify(cardObject);
     localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
     }
+
+    this.load = function() {
+        if (localStorage.length > 0) {
+        for (var i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
+                var importCard = localStorage.getItem(localStorage.key(i));
+                var cardObject = JSON.parse(importCard);
+                var newCard = $(cardTemplate);
+                newCard.attr("id", cardObject.card_id);
+                newCard.attr("data-parent-board", cardObject.parent_board);
+                newCard.attr("data-status", cardObject.status);
+                newCard.attr("data-order", cardObject.order);
+                newCard.html(cardObject.title);
+                if (newCard.attr("data-status") === "new") {
+                    $("#new").append(newCard);
+                } else if (newCard.attr("data-status") === "in_progress") {
+                    $("#in_progress").append(newCard);
+                } else if (newCard.attr("data-status") === "review") {
+                    $("#review").append(newCard);
+                } else {
+                    $("#done").append(newCard);
+                }
+
+            }
+        }
+    } else {
+        $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
+    }
+    }
 }
 
 
@@ -71,32 +100,7 @@ var create = function(title) {
 };
 
 var display = function() {
-    if (localStorage.length > 0) {
-        for (var i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
-                var importCard = localStorage.getItem(localStorage.key(i));
-                var cardObject = JSON.parse(importCard);
-                var newCard = $(cardTemplate);
-                newCard.attr("id", cardObject.card_id);
-                newCard.attr("data-parent-board", cardObject.parent_board);
-                newCard.attr("data-status", cardObject.status);
-                newCard.attr("data-order", cardObject.order);
-                newCard.html(cardObject.title);
-                if (newCard.attr("data-status") === "new") {
-                    $("#new").append(newCard);
-                } else if (newCard.attr("data-status") === "in_progress") {
-                    $("#in_progress").append(newCard);
-                } else if (newCard.attr("data-status") === "review") {
-                    $("#review").append(newCard);
-                } else {
-                    $("#done").append(newCard);
-                }
-
-            }
-        }
-    } else {
-        $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
-    }
+    proxyObject.load();
 };
 
 

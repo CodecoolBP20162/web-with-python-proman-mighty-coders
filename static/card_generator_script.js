@@ -6,7 +6,6 @@ var getID = function() {
     return boardID
 };
 
-
 var formatTitle = function() {
     var forDelete = getID() + '%'
     var titleData = document.getElementById("boardData").innerHTML;
@@ -14,9 +13,9 @@ var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
 
-function handlingLocalStorage() {
-
-}
+// function handlingLocalStorage() {
+//
+// }
 
 var saveCardToLocal = function(card) {
     var cardObject = {
@@ -30,7 +29,6 @@ var saveCardToLocal = function(card) {
     localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
 };
 
-
 function Proxy(currentObject) {
     this.imp = new currentObject();
     this.proxySave = function(num) {
@@ -42,17 +40,24 @@ function Proxy(currentObject) {
 }
 
 
-var create = function(title) {
-    var num;
-    if ($(".card")[0]) {
-        var allCards = document.getElementsByClassName("card");
+
+var searchMaxId = function(element, checkNumberFrom) {
+    var allElements = document.getElementsByClassName(element);
         var maxId = 0;
-        for (var i = 0; i < allCards.length; i++) {
-            var currentId = parseInt(allCards.item(i).id.substring(4));
+        for (var i = 0; i < allElements.length; i++) {
+            var currentId = parseInt(allElements.item(i).id.substring(checkNumberFrom));
             if (currentId > maxId) {
                 maxId = currentId;
             }
         }
+    return maxId
+};
+
+
+var create = function(title) {
+    var num;
+    if ($(".card")[0]) {
+        var maxId = searchMaxId("card", 4);
         num = maxId + 1;
     } else {
         $("#no_cards").remove();

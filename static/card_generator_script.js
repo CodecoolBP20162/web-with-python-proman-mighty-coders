@@ -14,6 +14,10 @@ var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
 
+function handlingLocalStorage() {
+
+}
+
 var saveCardToLocal = function(card) {
     var cardObject = {
         card_id: card.attr("id"),
@@ -25,6 +29,17 @@ var saveCardToLocal = function(card) {
     var jsonCard = JSON.stringify(cardObject);
     localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
 };
+
+
+function Proxy(currentObject) {
+    this.imp = new currentObject();
+    this.proxySave = function(num) {
+        this.imp.save(num)
+    };
+    this.proxyLoad = function() {
+        this.imp.load()
+    };
+}
 
 
 var create = function(title) {

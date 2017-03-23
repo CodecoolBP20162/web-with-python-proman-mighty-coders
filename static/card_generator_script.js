@@ -1,10 +1,11 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data_order="non">Card title</li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
     var boardID = titleData.substring(0, titleData.indexOf('%'));
     return boardID
 };
+
 
 var formatTitle = function() {
     var forDelete = getID() + '%'
@@ -13,35 +14,80 @@ var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
 
+var saveCardToLocal = function(card) {
+    var cardObject = {
+        card_id: card.attr("id"),
+        title: card.html(),
+        parent_board: card.attr("data-parent-board"),
+        status: card.attr("data-status"),
+        order: card.attr("data-order")
+    };
+    var jsonCard = JSON.stringify(cardObject);
+    localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
+};
+
+
 var create = function(title) {
     var num;
     if ($(".card")[0]) {
-        num = parseInt($(".card:last").attr("id").match(/\d+/)) + 1;
+        var allCards = document.getElementsByClassName("card");
+        var maxId = 0;
+        for (var i = 0; i < allCards.length; i++) {
+            var currentId = parseInt(allCards.item(i).id.substring(4));
+            if (currentId > maxId) {
+                maxId = currentId;
+            }
+        }
+        num = maxId + 1;
     } else {
-        //$("#no_cards").remove();
+        $("#no_cards").remove();
         num = 1
     }
     if (num < 10) {
         num = "0" + num
     }
-    var newCard = $(cardTemplate).prop("id", "card" + num);
-    var parentBoard = getID()
+    var newCard = $(cardTemplate);
+    newCard.attr("id", "card" + num);
+    var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
+    newCard.html(title);
     $("#new").append(newCard);
-    document.getElementById("card" + num).innerHTML = title;
     $(".status_list").sortable("refresh");
-    /* var boardDict = {
-        board_id: document.getElementById("board" + num).id,
-        title_id: document.getElementById("title" + num).id,
-        title: document.getElementById("title" + num).innerHTML
-    };
-    var jsonBoard = JSON.stringify(boardDict);
-    localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);*/
+    saveCardToLocal($("#card" + num));
+};
+
+var display = function() {
+    if (localStorage.length > 0) {
+        for (var i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
+                var importCard = localStorage.getItem(localStorage.key(i));
+                var cardObject = JSON.parse(importCard);
+                var newCard = $(cardTemplate);
+                newCard.attr("id", cardObject.card_id);
+                newCard.attr("data-parent-board", cardObject.parent_board);
+                newCard.attr("data-status", cardObject.status);
+                newCard.attr("data-order", cardObject.order);
+                newCard.html(cardObject.title);
+                if (newCard.attr("data-status") === "new") {
+                    $("#new").append(newCard);
+                } else if (newCard.attr("data-status") === "in_progress") {
+                    $("#in_progress").append(newCard);
+                } else if (newCard.attr("data-status") === "review") {
+                    $("#review").append(newCard);
+                } else {
+                    $("#done").append(newCard);
+                }
+
+            }
+        }
+    } else {
+        $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
+    }
 };
 
 
 $(document).ready(function() {
-    //display();
+    display();
     $('#save_card_button').attr("disabled", "disabled");
 });
 
@@ -71,10 +117,13 @@ $(function() {
 $(".status_list").sortable().droppable().on('sortreceive', function() {
     cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
-        $(cards[i]).attr('data-status', this.id);
+        card = $(cards[i])
+        card.attr('data-status', this.id);
+        parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
+        localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
+        saveCardToLocal($(cards[i]));
         console.log(cards[i].getAttribute("data-status"));
     };
-
 });
 
 formatTitle()

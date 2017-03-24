@@ -4,12 +4,12 @@ var proxyObject = new Proxy(handlingLocalStorage);
 
 var getID = function() {
     var titleData = document.getElementById("boardData").innerHTML;
-    var boardID = titleData.substring(0, titleData.indexOf('%'));
+    var boardID = titleData.substring(0, titleData.indexOf('_'));
     return boardID
 };
 
 var formatTitle = function() {
-    var forDelete = getID() + '%';
+    var forDelete = getID() + '_';
     var titleData = document.getElementById("boardData").innerHTML;
     var newTitle = titleData.replace(forDelete, "");
     document.getElementById("boardCardsTitle").innerHTML = newTitle;

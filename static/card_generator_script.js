@@ -15,15 +15,6 @@ var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = newTitle;
 };
 
-var orderCards = function(list) {
-    list.sort(sort_list);
-
-    function sort_list(a, b) {
-        return (b.attr("data-order") < a.attr("data-order")) ? (1) : (-1);
-    }
-};
-
-
 function handlingLocalStorage() {
     this.save = function(card) {
         var cardObject = {
@@ -35,6 +26,14 @@ function handlingLocalStorage() {
         };
         var jsonCard = JSON.stringify(cardObject);
         localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
+    };
+
+    this.orderCards = function(list) {
+        list.sort(sort_list);
+
+        function sort_list(a, b) {
+            return (b.attr("data-order") < a.attr("data-order")) ? (1) : (-1);
+        }
     };
 
     this.load = function() {
@@ -64,10 +63,10 @@ function handlingLocalStorage() {
                     };
                 };
             };
-            orderCards(newArray);
-            orderCards(progressArray);
-            orderCards(reviewArray);
-            orderCards(doneArray);
+            this.orderCards(newArray);
+            this.orderCards(progressArray);
+            this.orderCards(reviewArray);
+            this.orderCards(doneArray);
             for (var i = 0; i < newArray.length; i++) {
                 $("#new").append(newArray[i]);
             };

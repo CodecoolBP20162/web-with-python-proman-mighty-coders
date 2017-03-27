@@ -3,7 +3,7 @@
  */
 
 var boardTemplate = '<div class="col-sm-3" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
-var proxyObject = new Proxy(handlingLocalStorage);
+var proxyObject = new dataLayer(handlingLocalStorage);
 
 
 function handlingLocalStorage() {
@@ -30,17 +30,17 @@ function handlingLocalStorage() {
                 }
             }
         } else {
-            $("#board_row").append('<div class="col-sm-12" id="no_boards">There are no boards in the system. Start working NOW!</div>');
+            $("#board_row").append('<div class="col-sm-12" id="no_boards"><div class="alert alert-info"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There are no boards in the system. Start working NOW!</div></div>');
         }
     };
 }
 
-function Proxy(currentObject) {
+function dataLayer(currentObject) {
     this.imp = new currentObject();
-    this.proxySave = function(num) {
+    this.save = function(num) {
         this.imp.save(num)
     };
-    this.proxyLoad = function() {
+    this.load = function() {
         this.imp.load()
     };
 }
@@ -60,11 +60,11 @@ var create = function(title) {
     newBoard.children().find('#title').prop("id", "title" + num);
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
-    proxyObject.proxySave(num);
+    proxyObject.save(num);
 };
 
 var display = function() {
-    proxyObject.proxyLoad();
+    proxyObject.load();
 };
 
 $(document).ready(function() {

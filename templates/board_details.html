@@ -1,14 +1,14 @@
 {% extends 'layout.html' %} {% block content %}
 
 <div id="boardData" hidden>{{ title }}</div>
-
+<div class="container">
 <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <a href="{{ url_for('index') }}">
             <span class="glyphicon glyphicon-arrow-left" title="Back"></span>
         </a>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-9">
         <h1 class="boardCardsTitle" id="boardCardsTitle"></h1>
     </div>
     <div class="col-sm-2">
@@ -19,32 +19,32 @@
         </button>
 
     </div>
-
+</div>
 </div>
 
+<div class="container">
+    <section class="sectioner">
+        <div class="status_header">New</div>
+        <ul id="new" class="status_list">
+        </ul>
+    </section>
 
-<section class="sectioner">
-    <div class="status_header">New</div>
-    <ul id="new" class="status_list">
-    </ul>
-</section>
-
-<section class="sectioner">
-    <div class="status_header">In Progress</div>
-    <ul id="in_progress" class="status_list">
-    </ul>
-</section>
-<section class="sectioner">
-    <div class="status_header">Review</div>
-    <ul id="review" class="status_list">
-    </ul>
-</section>
-<section class="sectioner">
-    <div class="status_header">Done</div>
-    <ul id="done" class="status_list">
-    </ul>
-</section>
-
+    <section class="sectioner">
+        <div class="status_header">In Progress</div>
+        <ul id="in_progress" class="status_list">
+        </ul>
+    </section>
+    <section class="sectioner">
+        <div class="status_header">Review</div>
+        <ul id="review" class="status_list">
+        </ul>
+    </section>
+    <section class="sectioner">
+        <div class="status_header">Done</div>
+        <ul id="done" class="status_list">
+        </ul>
+    </section>
+</div>
 <!-- Modal -->
 <div id="create_card_modal" class="modal fade" role="dialog">
     <div class="modal-dialog">

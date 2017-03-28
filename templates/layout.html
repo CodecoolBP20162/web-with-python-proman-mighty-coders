@@ -14,31 +14,19 @@
 <body>
 
 
-    <div class="row">
-        <div class="col-sm-12">
-            <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar_main">
-                <div class="container text-center">
-                    <div class="brand">
-                        <div class="col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
-                            <a class="navbar-brand" href="{{ url_for('index') }}">
-                                <p class="text-center" id="navbar_brand">ProMan</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top container-fluid text-cente" id="navbar_main">
+            <div class="brand col-xs-offset-4 col-sm-offset-5 col-md-offset-5">
+                    <a class="navbar-brand" href="{{ url_for('index') }}">
+                        <p class="text-center" id="navbar_brand">ProMan</p>
+                    </a>
+            </div>
+    </nav>
+
 
     {% block content %}{% endblock %}
-
-    <div class="footer navbar-fixed-bottom bg-primary" id="navbar_footer">
-        <div class="row">
-            <div class="col-md-11 offset1 ">
-                <div class="text-right">
-                    <p class="text-right">Brought to you by Mighty Coders</p>
-                </div>
-            </div>
+    <div class="container-fluid footer navbar-fixed-bottom bg-primary" id="navbar_footer">
+        <div class="col-md-11 offset1 text-right">
+            <p>Brought to you by Mighty Coders</p>
         </div>
     </div>
 

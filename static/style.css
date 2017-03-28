@@ -7,16 +7,21 @@ body {
     background-color: #173e43;
 }
 
+#no-boards {
+
+}
+
 .board {
     border-radius: 5px;
     background-color:#3fb0ac;
     transition: background-color 0.5s ease;
+    padding-left: 8px;
     margin: 10px;
     display: block;
-    max-height: 100px;
+    max-height: 100%;
     height: 100px;
-    max-width: 270px;
-    width: 270px;
+    max-width: 100%;
+    width: 100%;
     overflow: hidden;
     -webkit-transition: all 1s ease; /* Safari and Chrome */
     -moz-transition: all 1s ease; /* Firefox */
@@ -27,9 +32,6 @@ body {
 
 .board_title,
 #navbar_brand {
-    margin-left: 15px;
-    margin-right: 15px;
-    margin-bottom: 15px;
     font-weight: bold;
     color: white;
 }
@@ -68,6 +70,7 @@ body {
 
 .card:hover {
     background-color: #173e43;
+    cursor: move;
 }
 
 #modal_button {

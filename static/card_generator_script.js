@@ -1,5 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
-var proxyObject = new Proxy(handlingLocalStorage);
+var proxyObject = new dataLayer(handlingLocalStorage);
 
 
 var getID = function() {
@@ -85,12 +85,12 @@ function handlingLocalStorage() {
     }
 }
 
-function Proxy(currentObject) {
+function dataLayer(currentObject) {
     this.imp = new currentObject();
-    this.proxySave = function(card) {
+    this.save = function(card) {
         this.imp.save(card)
     };
-    this.proxyLoad = function() {
+    this.load = function() {
         this.imp.load()
     };
 }
@@ -133,12 +133,12 @@ var create = function(title) {
     newCard.html(title);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
-    proxyObject.proxySave($("#card" + num));
+    proxyObject.save($("#card" + num));
 };
 
 
 var display = function() {
-    proxyObject.proxyLoad();
+    proxyObject.load();
 };
 
 
@@ -184,7 +184,7 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         console.log(card.attr('data-order'))
         parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
         localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
-        proxyObject.proxySave($(cards[i]));
+        proxyObject.save($(cards[i]));
         console.log(cards[i].getAttribute("data-status"));
     };
 });

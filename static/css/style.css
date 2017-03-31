@@ -78,6 +78,10 @@ body {
     background-color: transparent;
 }
 
+#modal_button:focus {
+    outline: none;
+}
+
 .sectioner {
     display: inline-block;
     float: left;

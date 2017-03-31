@@ -1,5 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
-var proxyObject = new dataLayer(handlingLocalStorage);
+var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 
 var getID = function() {
@@ -11,87 +11,6 @@ var getID = function() {
 var formatTitle = function() {
     document.getElementById("boardCardsTitle").innerHTML = getID();
 };
-
-function handlingLocalStorage() {
-    this.save = function(card) {
-        var cardObject = {
-            card_id: card.attr("id"),
-            title: card.html(),
-            parent_board: card.attr("data-parent-board"),
-            status: card.attr("data-status"),
-            order: card.attr("data-order")
-        };
-        var jsonCard = JSON.stringify(cardObject);
-        localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
-    };
-
-    this.orderCards = function(list) {
-        list.sort(sort_list);
-
-        function sort_list(a, b) {
-            return (b.attr("data-order") < a.attr("data-order")) ? (1) : (-1);
-        }
-    };
-
-    this.load = function() {
-        newArray = []
-        progressArray = []
-        reviewArray = []
-        doneArray = []
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
-                    var importCard = localStorage.getItem(localStorage.key(i));
-                    var cardObject = JSON.parse(importCard);
-                    var newCard = $(cardTemplate);
-                    newCard.attr("id", cardObject.card_id);
-                    newCard.attr("data-parent-board", cardObject.parent_board);
-                    newCard.attr("data-status", cardObject.status);
-                    newCard.attr("data-order", cardObject.order);
-                    newCard.html(cardObject.title);
-                    if (newCard.attr("data-status") === "new") {
-                        newArray.push(newCard);
-                    } else if (newCard.attr("data-status") === "in_progress") {
-                        progressArray.push(newCard);
-                    } else if (newCard.attr("data-status") === "review") {
-                        reviewArray.push(newCard);
-                    } else if (newCard.attr("data-status") === "done") {
-                        doneArray.push(newCard);
-                    };
-                };
-            };
-            this.orderCards(newArray);
-            this.orderCards(progressArray);
-            this.orderCards(reviewArray);
-            this.orderCards(doneArray);
-            for (var i = 0; i < newArray.length; i++) {
-                $("#new").append(newArray[i]);
-            };
-            for (var i = 0; i < progressArray.length; i++) {
-                $("#in_progress").append(progressArray[i]);
-            };
-            for (var i = 0; i < reviewArray.length; i++) {
-                $("#review").append(reviewArray[i]);
-            };
-            for (var i = 0; i < doneArray.length; i++) {
-                $("#done").append(doneArray[i]);
-            };
-        } else {
-            $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
-        };
-    }
-}
-
-function dataLayer(currentObject) {
-    this.imp = new currentObject();
-    this.save = function(card) {
-        this.imp.save(card)
-    };
-    this.load = function() {
-        this.imp.load()
-    };
-}
-
 
 var searchMaxId = function(element, checkNumberFrom) {
     var allElements = document.getElementsByClassName(element);
@@ -130,12 +49,12 @@ var create = function(title) {
     newCard.html(title);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
-    proxyObject.save($("#card" + num));
+    dataLayerObj.saveCard($("#card" + num));
 };
 
 
 var display = function() {
-    proxyObject.load();
+    dataLayerObj.loadCards();
 };
 
 
@@ -173,17 +92,16 @@ $(function() {
 
 
 $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
-    cards = this.getElementsByClassName("card");
+    var cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
-        card = $(cards[i])
+        var card = $(cards[i]);
         card.attr('data-order', i + 1)
         card.attr('data-status', this.id);
-        console.log(card.attr('data-order'))
         parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
         localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
-        proxyObject.save($(cards[i]));
+        dataLayerObj.save($(cards[i]));
         console.log(cards[i].getAttribute("data-status"));
-    };
+    }
 });
 
 formatTitle();

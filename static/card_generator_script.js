@@ -9,7 +9,12 @@ var getID = function() {
 };
 
 var formatTitle = function() {
-    document.getElementById("boardCardsTitle").innerHTML = getID();
+    for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i).includes(getID())) {
+            var importBoard = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            document.getElementById("boardCardsTitle").innerHTML = importBoard.title
+        };
+    };
 };
 
 function handlingLocalStorage() {

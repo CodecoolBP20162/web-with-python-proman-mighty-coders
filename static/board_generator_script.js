@@ -60,7 +60,7 @@ var create = function(title) {
     }
     var newBoard = $(boardTemplate).prop("id", "board" + num);
     newBoard.children().find('#title').prop("id", "title" + num);
-    card_list = []
+    card_list = new Array
     newBoard.attr("data-cards", JSON.stringify(card_list));
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;

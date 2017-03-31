@@ -42,16 +42,15 @@ function handlingLocalStorage() {
     };
 
     this.load = function() {
-        newArray = []
-        progressArray = []
-        reviewArray = []
-        doneArray = []
-        for (var i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(i));
+        var newArray = []
+        var progressArray = []
+        var reviewArray = []
+        var doneArray = []
+        for (var z = 0; z < localStorage.length; z++) {
+            if (localStorage.key(z).includes(getID())) {
+                var importBoard = localStorage.getItem(localStorage.key(z));
                 var importBoard = JSON.parse(importBoard);
-                cards = JSON.parse(importBoard.cards)
-                console.log(cards)
+                var cards = JSON.parse(importBoard.cards)
                 for (var i = 0; i < cards.length; i++) {
                     var cardObject = JSON.parse(cards[i]);
                     var newCard = $(cardTemplate);

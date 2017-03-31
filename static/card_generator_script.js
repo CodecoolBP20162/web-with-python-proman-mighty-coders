@@ -41,6 +41,29 @@ function handlingLocalStorage() {
         }
     };
 
+    this.removeCard = function(card) {
+        for (var z = 0; z < localStorage.length; z++) {
+            if (localStorage.key(z).includes(getID())) {
+                var importBoard = localStorage.getItem(localStorage.key(z));
+                var importBoard = JSON.parse(importBoard);
+                var cards = JSON.parse(importBoard.cards)
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i] = JSON.parse(cards[i]);
+                };
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].card_id === card.attr("id")) {
+                        cards.splice(i, 1)
+                    };
+                };
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i] = JSON.stringify(cards[i]);
+                };
+                importBoard.cards = JSON.stringify(cards)
+                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
+            };
+        };
+    };
+
     this.load = function() {
         var newArray = []
         var progressArray = []
@@ -91,6 +114,7 @@ function handlingLocalStorage() {
 };
 
 
+
 function dataLayer(currentObject) {
     this.imp = new currentObject();
     this.save = function(card) {
@@ -98,6 +122,9 @@ function dataLayer(currentObject) {
     };
     this.load = function() {
         this.imp.load()
+    };
+    this.removeCard = function(card) {
+        this.imp.removeCard(card)
     };
 }
 
@@ -187,10 +214,8 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         card = $(cards[i])
         card.attr('data-order', i + 1)
         card.attr('data-status', this.id);
-        parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
-        localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
+        proxyObject.removeCard($(cards[i]))
         proxyObject.save($(cards[i]));
-        console.log(cards[i].getAttribute("data-status"));
     };
 });
 

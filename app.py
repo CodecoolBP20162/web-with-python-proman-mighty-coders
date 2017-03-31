@@ -8,9 +8,9 @@ def index():
     return render_template('boards.html')
 
 
-@app.route("/details/<board_title>")
-def board_details(board_title):
-    title = board_title
+@app.route("/details/<board>")
+def board_details(board):
+    title = board
     return render_template('board_details.html', title=title)
 
 

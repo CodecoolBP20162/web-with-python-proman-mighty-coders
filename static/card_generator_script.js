@@ -3,16 +3,13 @@ var proxyObject = new dataLayer(handlingLocalStorage);
 
 
 var getID = function() {
-    var titleData = document.getElementById("boardData").innerHTML;
-    var boardID = titleData.substring(0, titleData.indexOf('_'));
+    var titleData = window.location.pathname;
+    var boardID = titleData.slice(9);
     return boardID
 };
 
 var formatTitle = function() {
-    var forDelete = getID() + '_';
-    var titleData = document.getElementById("boardData").innerHTML;
-    var newTitle = titleData.replace(forDelete, "");
-    document.getElementById("boardCardsTitle").innerHTML = newTitle;
+    document.getElementById("boardCardsTitle").innerHTML = getID();
 };
 
 function handlingLocalStorage() {

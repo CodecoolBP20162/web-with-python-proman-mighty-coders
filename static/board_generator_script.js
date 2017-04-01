@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-3" id="board0"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
 var proxyObject = new dataLayer(handlingLocalStorage);
 
 
@@ -11,7 +11,8 @@ function handlingLocalStorage() {
         var boardObject = {
             board_id: document.getElementById("board" + num).id,
             title_id: document.getElementById("title" + num).id,
-            title: document.getElementById("title" + num).innerHTML
+            title: document.getElementById("title" + num).innerHTML,
+            cards: $("#board" + num).attr("data-cards")
         };
         var jsonBoard = JSON.stringify(boardObject);
         localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
@@ -24,6 +25,7 @@ function handlingLocalStorage() {
                     var importBoard = localStorage.getItem(localStorage.key(i));
                     var jsonBoard = JSON.parse(importBoard);
                     var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
+                    newBoard.attr("data-cards", jsonBoard.cards);
                     newBoard.children().find('#title').prop("id", jsonBoard.title_id);
                     $("#board_row").append(newBoard);
                     document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
@@ -58,6 +60,8 @@ var create = function(title) {
     }
     var newBoard = $(boardTemplate).prop("id", "board" + num);
     newBoard.children().find('#title').prop("id", "title" + num);
+    card_list = new Array
+    newBoard.attr("data-cards", JSON.stringify(card_list));
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
     proxyObject.save(num);
@@ -94,7 +98,7 @@ $("#create_board_modal").on("hidden.bs.modal", function() {
 });
 
 $(document).on("click", ".board", function() {
-    var boardTitle = $(this).text();
     var boardID = $(this).parent().attr('id');
-    location.href = '/details/' + boardID + "_" + boardTitle;
+    boardID = boardID.replace('board', '')
+    location.href = '/details/' + boardID;
 });

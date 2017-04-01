@@ -3,16 +3,18 @@ var proxyObject = new dataLayer(handlingLocalStorage);
 
 
 var getID = function() {
-    var titleData = document.getElementById("boardData").innerHTML;
-    var boardID = titleData.substring(0, titleData.indexOf('_'));
+    var titleData = window.location.pathname;
+    var boardID = titleData.slice(9);
     return boardID
 };
 
 var formatTitle = function() {
-    var forDelete = getID() + '_';
-    var titleData = document.getElementById("boardData").innerHTML;
-    var newTitle = titleData.replace(forDelete, "");
-    document.getElementById("boardCardsTitle").innerHTML = newTitle;
+    for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i).includes(getID())) {
+            var importBoard = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            document.getElementById("boardCardsTitle").innerHTML = importBoard.title
+        };
+    };
 };
 
 function handlingLocalStorage() {
@@ -24,8 +26,16 @@ function handlingLocalStorage() {
             status: card.attr("data-status"),
             order: card.attr("data-order")
         };
-        var jsonCard = JSON.stringify(cardObject);
-        localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
+        for (var i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).includes(getID())) {
+                var importBoard = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                var cards = JSON.parse(importBoard.cards);
+                cards.push(JSON.stringify(cardObject));
+                cards = JSON.stringify(cards);
+                importBoard.cards = cards;
+                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
+            };
+        };
     };
 
     this.orderCards = function(list) {
@@ -36,16 +46,41 @@ function handlingLocalStorage() {
         }
     };
 
+    this.removeCard = function(card) {
+        for (var z = 0; z < localStorage.length; z++) {
+            if (localStorage.key(z).includes(getID())) {
+                var importBoard = localStorage.getItem(localStorage.key(z));
+                var importBoard = JSON.parse(importBoard);
+                var cards = JSON.parse(importBoard.cards)
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i] = JSON.parse(cards[i]);
+                };
+                for (var i = 0; i < cards.length; i++) {
+                    if (cards[i].card_id === card.attr("id")) {
+                        cards.splice(i, 1)
+                    };
+                };
+                for (var i = 0; i < cards.length; i++) {
+                    cards[i] = JSON.stringify(cards[i]);
+                };
+                importBoard.cards = JSON.stringify(cards)
+                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
+            };
+        };
+    };
+
     this.load = function() {
-        newArray = []
-        progressArray = []
-        reviewArray = []
-        doneArray = []
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
-                    var importCard = localStorage.getItem(localStorage.key(i));
-                    var cardObject = JSON.parse(importCard);
+        var newArray = []
+        var progressArray = []
+        var reviewArray = []
+        var doneArray = []
+        for (var z = 0; z < localStorage.length; z++) {
+            if (localStorage.key(z).includes(getID())) {
+                var importBoard = localStorage.getItem(localStorage.key(z));
+                var importBoard = JSON.parse(importBoard);
+                var cards = JSON.parse(importBoard.cards)
+                for (var i = 0; i < cards.length; i++) {
+                    var cardObject = JSON.parse(cards[i]);
                     var newCard = $(cardTemplate);
                     newCard.attr("id", cardObject.card_id);
                     newCard.attr("data-parent-board", cardObject.parent_board);
@@ -79,11 +114,11 @@ function handlingLocalStorage() {
             for (var i = 0; i < doneArray.length; i++) {
                 $("#done").append(doneArray[i]);
             };
-        } else {
-            $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
         };
-    }
-}
+    };
+};
+
+
 
 function dataLayer(currentObject) {
     this.imp = new currentObject();
@@ -92,6 +127,9 @@ function dataLayer(currentObject) {
     };
     this.load = function() {
         this.imp.load()
+    };
+    this.removeCard = function(card) {
+        this.imp.removeCard(card)
     };
 }
 
@@ -181,11 +219,8 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         card = $(cards[i])
         card.attr('data-order', i + 1)
         card.attr('data-status', this.id);
-        console.log(card.attr('data-order'))
-        parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
-        localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
+        proxyObject.removeCard($(cards[i]))
         proxyObject.save($(cards[i]));
-        console.log(cards[i].getAttribute("data-status"));
     };
 });
 

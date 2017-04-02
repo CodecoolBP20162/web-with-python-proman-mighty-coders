@@ -1,5 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
-var proxyObject = new dataLayer(handlingLocalStorage);
+var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 
 var getID = function() {
@@ -29,7 +29,6 @@ var searchMaxId = function(element, checkNumberFrom) {
     return maxId
 };
 
-
 var create = function(title) {
     var num;
     var order;
@@ -53,21 +52,18 @@ var create = function(title) {
     newCard.html(title);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
-    proxyObject.saveCard($("#card" + num));
+    dataLayerObj.saveCard($("#card" + num));
 };
-
 
 var display = function() {
-    proxyObject.loadCards();
+    dataLayerObj.loadCards();
 };
-
 
 $(document).ready(function() {
     formatTitle();
     display();
     $('#save_card_button').attr("disabled", "disabled");
 });
-
 
 $('.modal').on('shown.bs.modal', function() {
     $(this).find('[autofocus]').focus();
@@ -95,14 +91,13 @@ $(function() {
     }).disableSelection();
 });
 
-
 $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
     var cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
         var card = $(cards[i]);
         card.attr('data-order', i + 1);
         card.attr('data-status', this.id);
-        proxyObject.removeCard($(cards[i]));
-        proxyObject.saveCard($(cards[i]));
+        dataLayerObj.removeCard($(cards[i]));
+        dataLayerObj.saveCard($(cards[i]));
     }
 });

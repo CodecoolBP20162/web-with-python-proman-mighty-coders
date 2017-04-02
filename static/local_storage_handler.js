@@ -84,6 +84,12 @@ function handlingLocalStorage() {
         }
     };
 
+    this.appendToStatus = function (arrayName, selector) {
+        for (var i = 0; i < arrayName.length; i++) {
+            selector.append(arrayName[i]);
+        }
+    };
+
     this.loadCards = function () {
         var newArray = [];
         var progressArray = [];
@@ -117,18 +123,10 @@ function handlingLocalStorage() {
             this.orderCards(progressArray);
             this.orderCards(reviewArray);
             this.orderCards(doneArray);
-            for (var i = 0; i < newArray.length; i++) {
-                $("#new").append(newArray[i]);
-            }
-            for (var i = 0; i < progressArray.length; i++) {
-                $("#in_progress").append(progressArray[i]);
-            }
-            for (var i = 0; i < reviewArray.length; i++) {
-                $("#review").append(reviewArray[i]);
-            }
-            for (var i = 0; i < doneArray.length; i++) {
-                $("#done").append(doneArray[i]);
-            }
+            this.appendToStatus(newArray, $("#new"));
+            this.appendToStatus(progressArray, $("#in_progress"));
+            this.appendToStatus(reviewArray, $("#review"));
+            this.appendToStatus(doneArray, $("#done"));
         }
     };
 }

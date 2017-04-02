@@ -3,7 +3,7 @@
  */
 
 var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
-var proxyObject = new dataLayer(handlingLocalStorage);
+var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 var create = function(title) {
     var num;
@@ -22,11 +22,11 @@ var create = function(title) {
     newBoard.attr("data-cards", JSON.stringify(card_list));
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
-    proxyObject.saveBoard(num);
+    dataLayerObj.saveBoard(num);
 };
 
 var display = function() {
-    proxyObject.loadBoards();
+    dataLayerObj.loadBoards();
 };
 
 $(document).ready(function() {

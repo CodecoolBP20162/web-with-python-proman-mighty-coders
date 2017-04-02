@@ -3,49 +3,7 @@
  */
 
 var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
-var proxyObject = new dataLayer(handlingLocalStorage);
-
-
-function handlingLocalStorage() {
-    this.save = function(num) {
-        var boardObject = {
-            board_id: document.getElementById("board" + num).id,
-            title_id: document.getElementById("title" + num).id,
-            title: document.getElementById("title" + num).innerHTML,
-            cards: $("#board" + num).attr("data-cards")
-        };
-        var jsonBoard = JSON.stringify(boardObject);
-        localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
-    };
-
-    this.load = function() {
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i).includes("board")) {
-                    var importBoard = localStorage.getItem(localStorage.key(i));
-                    var jsonBoard = JSON.parse(importBoard);
-                    var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
-                    newBoard.attr("data-cards", jsonBoard.cards);
-                    newBoard.children().find('#title').prop("id", jsonBoard.title_id);
-                    $("#board_row").append(newBoard);
-                    document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
-                }
-            }
-        } else {
-            $("#board_row").append('<div class="col-sm-12" id="no_boards"><div class="alert alert-info"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There are no boards in the system. Start working NOW!</div></div>');
-        }
-    };
-}
-
-function dataLayer(currentObject) {
-    this.imp = new currentObject();
-    this.save = function(num) {
-        this.imp.save(num)
-    };
-    this.load = function() {
-        this.imp.load()
-    };
-}
+var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 var create = function(title) {
     var num;
@@ -60,15 +18,15 @@ var create = function(title) {
     }
     var newBoard = $(boardTemplate).prop("id", "board" + num);
     newBoard.children().find('#title').prop("id", "title" + num);
-    card_list = new Array
+    var card_list = [];
     newBoard.attr("data-cards", JSON.stringify(card_list));
     $("#board_row").append(newBoard);
     document.getElementById("title" + num).innerHTML = title;
-    proxyObject.save(num);
+    dataLayerObj.saveBoard(num);
 };
 
 var display = function() {
-    proxyObject.load();
+    dataLayerObj.loadBoards();
 };
 
 $(document).ready(function() {
@@ -99,6 +57,6 @@ $("#create_board_modal").on("hidden.bs.modal", function() {
 
 $(document).on("click", ".board", function() {
     var boardID = $(this).parent().attr('id');
-    boardID = boardID.replace('board', '')
+    boardID = boardID.replace('board', '');
     location.href = '/details/' + boardID;
 });

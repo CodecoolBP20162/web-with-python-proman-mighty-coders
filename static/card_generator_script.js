@@ -101,3 +101,4 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         dataLayerObj.saveCard($(cards[i]));
     }
 });
+

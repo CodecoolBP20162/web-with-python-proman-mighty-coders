@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper"><span class="glyphicon glyphicon-trash" id="Delete" title="Delete"></span><span class="glyphicon glyphicon-pencil" id="Edit" title="Edit"></span></div></div></div>';
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 var create = function(title) {

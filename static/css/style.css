@@ -152,12 +152,12 @@ body {
     color: white;
 }
 
-.glyphicon-pencil {
-    left: 70%;
+#delete_board {
+    left: 73%;
 }
 
-.glyphicon-trash {
-    left: 90%;
+#edit_board {
+    left: 81%;
 }
 
 .edit-delete-wrapper {
@@ -169,4 +169,21 @@ body {
 .board:hover .edit-delete-wrapper {
     visibility: visible;
     opacity: 1;
+}
+
+.card:hover .edit-delete-wrapper {
+    visibility: visible;
+    opacity: 1;
+}
+
+#card-icons {
+    display: inline-block;
+}
+
+#delete_card {
+    left: 490%;
+}
+
+#edit_card {
+    left: 530%;
 }

@@ -4,7 +4,8 @@
 
 function handlingLocalStorage() {
 
-    this.saveBoard = function (num) {
+
+    this.saveBoard = function(num) {
         var boardObject = {
             board_id: document.getElementById("board" + num).id,
             title_id: document.getElementById("title" + num).id,
@@ -15,7 +16,7 @@ function handlingLocalStorage() {
         localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
     };
 
-    this.loadBoards = function () {
+    this.loadBoards = function() {
         if (localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++) {
                 if (localStorage.key(i).includes("board")) {
@@ -33,7 +34,7 @@ function handlingLocalStorage() {
         }
     };
 
-    this.saveCard = function (card) {
+    this.saveCard = function(card) {
         var cardObject = {
             card_id: card.attr("id"),
             title: card.html(),
@@ -53,7 +54,7 @@ function handlingLocalStorage() {
         }
     };
 
-    this.orderCards = function (list) {
+    this.orderCards = function(list) {
         list.sort(sort_list);
 
         function sort_list(a, b) {
@@ -61,7 +62,7 @@ function handlingLocalStorage() {
         }
     };
 
-    this.removeCard = function (card) {
+    this.removeCard = function(card) {
         for (var z = 0; z < localStorage.length; z++) {
             if (localStorage.key(z).includes(getID())) {
                 var importBoard = localStorage.getItem(localStorage.key(z));
@@ -84,13 +85,13 @@ function handlingLocalStorage() {
         }
     };
 
-    this.appendToStatus = function (arrayName, selector) {
+    this.appendToStatus = function(arrayName, selector) {
         for (var i = 0; i < arrayName.length; i++) {
             selector.append(arrayName[i]);
         }
     };
 
-    this.loadCards = function () {
+    this.loadCards = function() {
         var newArray = [];
         var progressArray = [];
         var reviewArray = [];

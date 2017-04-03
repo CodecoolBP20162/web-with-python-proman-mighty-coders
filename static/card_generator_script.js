@@ -1,4 +1,4 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title<div class="edit-delete-wrapper"><span class="glyphicon glyphicon-trash" id="delete_cards" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_cards" title="Edit cards"></span></div></li>';
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 

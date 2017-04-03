@@ -178,12 +178,9 @@ body {
 
 #card-icons {
     display: inline-block;
-}
-
-#delete_card {
-    left: 490%;
+    padding-right: 7%;
 }
 
 #edit_card {
-    left: 530%;
+    left: 40%;
 }

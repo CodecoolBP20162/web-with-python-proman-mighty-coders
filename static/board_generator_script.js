@@ -2,7 +2,16 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper"><span class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></span><span class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board"></span></div></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null">' +
+                        '<div class="board">' +
+                            '<h3 class="board_title" id ="title">Project title</h3>' +
+                            '<div class="edit-delete-wrapper">' +
+                                '<span class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></span>' +
+                                '<span class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board"></span>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 var create = function(title) {
@@ -18,6 +27,7 @@ var create = function(title) {
     }
     var newBoard = $(boardTemplate).prop("id", "board" + num);
     newBoard.children().find('#title').prop("id", "title" + num);
+    newBoard.children().find('#delete_board').prop("id", "delete_board" + num);
     var card_list = [];
     newBoard.attr("data-cards", JSON.stringify(card_list));
     $("#board_row").append(newBoard);
@@ -60,3 +70,5 @@ $(document).on("click", ".board", function() {
     boardID = boardID.replace('board', '');
     location.href = '/details/' + boardID;
 });
+
+

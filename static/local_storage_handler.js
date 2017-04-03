@@ -24,6 +24,7 @@ function handlingLocalStorage() {
                     var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
                     newBoard.attr("data-cards", jsonBoard.cards);
                     newBoard.children().find('#title').prop("id", jsonBoard.title_id);
+                    newBoard.children().find('#delete_board').prop("id", "delete_" + jsonBoard.board_id);
                     $("#board_row").append(newBoard);
                     document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
                 }

@@ -177,10 +177,11 @@ body {
 }
 
 #card-icons {
-    display: inline-block;
-    padding-right: 7%;
+    left: 100%;
+    float: right;
+    padding-right: 3%;
 }
 
-#edit_card {
-    left: 40%;
+#delete_card {
+    padding-right: 10px;
 }

@@ -6,7 +6,7 @@ var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null">' +
                         '<div class="board">' +
                             '<h3 class="board_title" id ="title">Project title</h3>' +
                             '<div class="edit-delete-wrapper">' +
-                                '<span class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></span>' +
+                                '<span onclick="deleteBoard(this)" class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></span>' +
                                 '<span class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board"></span>' +
                             '</div>' +
                         '</div>' +
@@ -71,4 +71,8 @@ $(document).on("click", ".board", function() {
     location.href = '/details/' + boardID;
 });
 
-
+var deleteBoard = function() {
+    event.stopPropagation();
+    var id = $(this).parents('.col-sm-3').prop('id');
+    console.log(id);
+};

@@ -45,7 +45,7 @@
         </ul>
     </section>
 </div>
-<!-- Modal -->
+<!--Save Modal -->
 <div id="create_card_modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -57,11 +57,33 @@
             </div>
             <div class="modal-body">
                 <label>Card title:</label>
-                <input required minlength="1" id="new_card_title" type="text" maxlength="70" placeholder="Title" autofocus>
+                <input required minlength="1" id="new_card_title" type="text" maxlength="20" placeholder="Title" autofocus>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button id="save_card_button" type="button" class="btn btn-info" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal -->
+<div id="edit_card_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit card</h4>
+            </div>
+            <div class="modal-body" data-card="">
+                <label>Card title:</label>
+                <input required minlength="1" id="edit_card_title" type="text" maxlength="20" placeholder="Title" autofocus>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button id="edit_card_button" type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
             </div>
         </div>
     </div>

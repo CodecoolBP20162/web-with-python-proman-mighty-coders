@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper" id="board-icons"><div class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></div><div class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board" data-toggle="modal" data-target="#edit_board_modal"></div></div></div></div>';
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 var create = function(title) {
@@ -55,8 +55,48 @@ $("#create_board_modal").on("hidden.bs.modal", function() {
     $('#save_board_button').attr("disabled", "disabled");
 });
 
+$("#create_board_modal").keypress(function(e) {
+    if ($('#new_board_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#save_board_button').click();
+        };
+    };
+});
+
+$("#edit_board_modal").keypress(function(e) {
+    if ($('#edit_board_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#edit_board_button').click();
+        };
+    };
+    this.show('false')
+});
+
 $(document).on("click", ".board", function() {
     var boardID = $(this).parent().attr('id');
     boardID = boardID.replace('board', '');
     location.href = '/details/' + boardID;
+});
+
+$(document).on("click", "#delete_board", function(event) {
+    event.stopPropagation();
+    var boardID = $(this).parent().parent().parent().attr('id');
+    dataLayerObj.removeBoard(boardID)
+    $(".col-sm-3").remove()
+    dataLayerObj.loadBoards()
+});
+
+$(document).on("click", "#edit_board", function(event) {
+    event.stopPropagation();
+    var editBoardID = $(this).parent().parent().parent().attr('id');
+    $("#edit_board_title").val($(this).parent().parent().find("h3").html())
+    $(".modal-body").attr("data-board", editBoardID)
+});
+
+$('#edit_board_button').click(function() {
+    var title = $('#edit_board_title').val();
+    var boardID = ($(".modal-body").attr("data-board"))
+    $("#" + boardID).find("h3").html(title)
+    dataLayerObj.saveBoard("0" + parseInt($("#" + boardID).attr("id").match(/\d+/)))
+
 });

@@ -3,20 +3,20 @@ from peewee import *
 
 def database():
     try:
-        credentials = open("database.txt", "r").readlines()
-        database = credentials[0].replace("\n", "").split(":", 1)[1]
+        credentials = open("../database.txt", "r").readlines()
+        database_name = credentials[0].replace("\n", "").split(":", 1)[1]
         username = credentials[1].replace("\n", "").split(":", 1)[1]
-        return PostgresqlDatabase(database, user=username)
+        return PostgresqlDatabase(database_name, user=username)
     except:
         print("Provide your database and user name in 'database.txt', colon-separated.")
 
 
-database = database()
+db = database()
 
 
 class BaseModel(Model):
     class Meta:
-        database = database
+        database = db
 
 
 class Boards(BaseModel):

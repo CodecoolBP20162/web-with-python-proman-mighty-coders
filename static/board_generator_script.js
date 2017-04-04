@@ -55,6 +55,23 @@ $("#create_board_modal").on("hidden.bs.modal", function() {
     $('#save_board_button').attr("disabled", "disabled");
 });
 
+$("#create_board_modal").keypress(function(e) {
+    if ($('#new_board_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#save_board_button').click();
+        };
+    };
+});
+
+$("#edit_board_modal").keypress(function(e) {
+    if ($('#edit_board_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#edit_board_button').click();
+        };
+    };
+    this.show('false')
+});
+
 $(document).on("click", ".board", function() {
     var boardID = $(this).parent().attr('id');
     boardID = boardID.replace('board', '');

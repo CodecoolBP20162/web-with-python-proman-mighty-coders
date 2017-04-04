@@ -1,5 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
-var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards"></span></div>'
+var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 
@@ -110,4 +110,21 @@ $(document).on("click", "#delete_card", function(event) {
     dataLayerObj.removeCard($("#" + cardID))
     $(".card").remove()
     dataLayerObj.loadCards()
+});
+
+$(document).on("click", "#edit_card", function(event) {
+    event.stopPropagation();
+    var editCardID = $(this).parent().parent().attr('id');
+    $("#edit_card_title").val($(this).parent().parent().html().split('<div')[0]);
+    $(".modal-body").attr("data-card", editCardID);
+});
+
+
+$('#edit_card_button').click(function() {
+    var title = $('#edit_card_title').val();
+    var cardID = ($(".modal-body").attr("data-card"))
+    dataLayerObj.removeCard($("#" + cardID))
+    $("#" + cardID).html(title + buttons)
+    dataLayerObj.saveCard($("#" + cardID))
+
 });

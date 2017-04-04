@@ -34,6 +34,10 @@ function handlingLocalStorage() {
         }
     };
 
+    this.removeBoard = function(id) {
+        localStorage.removeItem(id);
+    };
+
     this.saveCard = function(card) {
         var cardObject = {
             card_id: card.attr("id"),

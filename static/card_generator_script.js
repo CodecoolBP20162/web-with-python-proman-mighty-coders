@@ -1,4 +1,5 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title<div class="edit-delete-wrapper"><span class="glyphicon glyphicon-trash" id="delete_cards" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_cards" title="Edit cards"></span></div></li>';
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
+var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards"></span></div>'
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 
@@ -49,7 +50,7 @@ var create = function(title) {
     newCard.attr("data-order", order);
     var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
-    newCard.html(title);
+    newCard.html(title + buttons);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
     dataLayerObj.saveCard($("#card" + num));

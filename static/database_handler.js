@@ -47,16 +47,18 @@ function handlingDB() {
             status: card.attr("data-status"),
             order: card.attr("data-order")
         };
-        for (var i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).includes(getID())) {
-                var importBoard = JSON.parse(localStorage.getItem(localStorage.key(i)));
-                var cards = JSON.parse(importBoard.cards);
-                cards.push(JSON.stringify(cardObject));
-                cards = JSON.stringify(cards);
-                importBoard.cards = cards;
-                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
+        var jsonCard = JSON.stringify(cardObject);
+        var boardID = cardObject.parent_board;
+        var url = "/details/" + boardID;
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: jsonCard,
+            success: function (response) {
+                alert('OK');
             }
-        }
+        });
+
     };
 
     this.orderCards = function (list) {

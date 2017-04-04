@@ -1,7 +1,6 @@
 from database_layer.handle_database import HandleDatabase
 from flask import Flask, render_template, request
 
-
 app = Flask(__name__)
 
 
@@ -9,15 +8,24 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         req_form_dict = dict(request.form)
-        HandleDatabase().fill_row(board_id=req_form_dict['board_id'][0],
-                                  title_id=req_form_dict['title_id'][0],
-                                  title=req_form_dict['title'][0])
+        HandleDatabase().board_fill_row(board_id=req_form_dict['board_id'][0],
+                                        title_id=req_form_dict['title_id'][0],
+                                        title=req_form_dict['title'][0])
     return render_template('boards.html')
 
 
-@app.route("/details/<board>")
+@app.route("/details/<board>", methods=['GET', 'POST'])
 def board_details(board):
     title = board
+    if request.method == 'POST':
+        req_form_dict = dict(request.form)
+        print(req_form_dict.keys())
+        HandleDatabase().card_fill_row(card_id=req_form_dict)
+                                       # title=req_form_dict['title'][0],
+                                       # parent_board=req_form_dict['parent_board'][0],
+                                       # status=req_form_dict['status'][0],
+                                       # order=req_form_dict['order'][0])
+
     return render_template('board_details.html', title=title)
 
 

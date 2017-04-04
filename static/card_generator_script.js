@@ -1,5 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
-var dataLayerObj = new dataLayer(handlingLocalStorage);
+var dataLayerObj = new dataLayer(handlingDB);
 
 
 var getID = function() {

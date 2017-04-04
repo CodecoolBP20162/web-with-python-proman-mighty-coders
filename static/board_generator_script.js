@@ -2,7 +2,7 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper" id="board-icons"><div class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></div><div class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board"></div></div></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper" id="board-icons"><div class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></div><div class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board" data-toggle="modal" data-target="#edit_board_modal"></div></div></div></div>';
 var dataLayerObj = new dataLayer(handlingLocalStorage);
 
 var create = function(title) {
@@ -71,6 +71,15 @@ $(document).on("click", "#delete_board", function(event) {
 
 $(document).on("click", "#edit_board", function(event) {
     event.stopPropagation();
-    var ID = $(this).parent().parent().parent().attr('id');
-    console.log("edit " + ID);
+    var editBoardID = $(this).parent().parent().parent().attr('id');
+    $("#edit_board_title").val($(this).parent().parent().find("h3").html())
+    $(".modal-body").attr("data-board", editBoardID)
+});
+
+$('#edit_board_button').click(function() {
+    var title = $('#edit_board_title').val();
+    var boardID = ($(".modal-body").attr("data-board"))
+    $("#" + boardID).find("h3").html(title)
+    dataLayerObj.saveBoard("0" + parseInt($("#" + boardID).attr("id").match(/\d+/)))
+
 });

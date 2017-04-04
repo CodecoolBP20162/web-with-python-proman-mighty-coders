@@ -10,23 +10,21 @@ function handlingDB() {
             title: document.getElementById("title" + num).innerHTML,
             cards: $("#board" + num).attr("data-cards")
         };
-        var jsonBoard = JSON.stringify(boardObject);
         $.ajax({
             url: "/",
             type: "POST",
-            data: boardObject,
-            success: function (response) {
-                alert('OK');
-            }
+            data: boardObject
         });
     };
 
     this.loadBoards = function () {
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i).includes("board")) {
-                    var importBoard = localStorage.getItem(localStorage.key(i));
-                    var jsonBoard = JSON.parse(importBoard);
+        $.ajax({
+            url: "/boards",
+            type: "GET",
+            success: function(response) {
+                var response_json = JSON.parse(response);
+                for (var i = 0; i < response_json.length; i++) {
+                    var jsonBoard = response_json[i];
                     var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
                     newBoard.attr("data-cards", jsonBoard.cards);
                     newBoard.children().find('#title').prop("id", jsonBoard.title_id);
@@ -34,9 +32,7 @@ function handlingDB() {
                     document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
                 }
             }
-        } else {
-            $("#board_row").append('<div class="col-sm-12" id="no_boards"><div class="alert alert-info"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There are no boards in the system. Start working NOW!</div></div>');
-        }
+        });
     };
 
     this.saveCard = function (card) {

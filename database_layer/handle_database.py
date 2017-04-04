@@ -12,7 +12,13 @@ class HandleDatabase:
                       title_id=title_id,
                       title=title)
 
-    def load_boards(self):
+    def make_json_list_from_boards(self):
         all_boards = Boards.select()
-        return all_boards
+        list_of_dicts = []
+        for board in all_boards:
+            list_of_dicts.append({'board_id': board.board_id,
+                                  'title_id': board.title_id,
+                                  'title': board.title,
+                                  'cards': []})
+        return list_of_dicts
 

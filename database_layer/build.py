@@ -1,4 +1,6 @@
 from database_layer.models import *
 
-db.connect()
-db.create_tables([Boards, Cards], safe=True)
+db = Database()
+db.db.connect()
+db.db.create_tables([Boards, Cards], safe=True)
+db.db.close()

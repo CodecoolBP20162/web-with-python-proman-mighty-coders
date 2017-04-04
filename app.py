@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
 from database_layer.handle_database import HandleDatabase
+from flask import Flask, render_template, request
 
 
 app = Flask(__name__)

@@ -4,9 +4,8 @@ from database_layer.models import *
 class HandleDatabase:
 
     def __init__(self):
-        self.db = db
+        self.db = Database().db
         self.db.connect()
-
 
     def fill_row(self, board_id, title_id, title):
         Boards.create(board_id=board_id,

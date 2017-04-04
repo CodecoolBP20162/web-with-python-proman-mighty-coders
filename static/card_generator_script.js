@@ -86,6 +86,24 @@ $("#create_card_modal").on("hidden.bs.modal", function() {
     $('#save_card_button').attr("disabled", "disabled");
 });
 
+$("#create_card_modal").keypress(function(e) {
+    if ($('#new_card_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#save_card_button').click();
+        };
+    };
+});
+
+$("#edit_card_modal").keypress(function(e) {
+    if ($('#edit_card_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#edit_card_button').click();
+        };
+    };
+    this.show('false')
+});
+
+
 $(function() {
     $("#new, #in_progress, #review, #done").sortable({
         connectWith: ".status_list"

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-from database_layer.saveToDatabase import SaveToDatabase
+from database_layer.handle_database import HandleDatabase
+
 
 app = Flask(__name__)
 
@@ -8,9 +9,9 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         req_form_dict = dict(request.form)
-        SaveToDatabase().fillRow(req_form_dict['board_id'][0],
-                                 req_form_dict['title_id'][0],
-                                 req_form_dict['title'][0])
+        HandleDatabase().fill_row(board_id=req_form_dict['board_id'][0],
+                                  title_id=req_form_dict['title_id'][0],
+                                  title=req_form_dict['title'][0])
     return render_template('boards.html')
 
 

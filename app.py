@@ -21,13 +21,10 @@ def return_all_boards():
     return json.dumps(handle_db.make_json_list_from_boards())
 
 
-@app.route('/cards', methods=['GET', 'POST'])
+@app.route('/cards', methods=['POST'])
 def return_all_cards():
-    board_id = ""
-    if request.method == 'POST':
-        request_form_dict = dict(request.form)
-        actual_board_id = request_form_dict['data'][0]
-        board_id = actual_board_id
+    request_form_dict = dict(request.form)
+    board_id = request_form_dict['boardId'][0]
     return json.dumps(handle_db.make_json_list_from_cards(board_id))
 
 

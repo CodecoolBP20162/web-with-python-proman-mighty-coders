@@ -95,19 +95,19 @@ function handlingDB() {
     };
 
     this.loadCards = function () {
-        var newArray = [];
-        var progressArray = [];
-        var reviewArray = [];
-        var doneArray = [];
         var id = location.href.slice(-2);
-        var boardID = "board" + id;
-        $.post("/cards", {
-            data: boardID
-        });
+        var boardID = {
+            boardId: "board" + id
+        };
         $.ajax({
             url: "/cards",
-            type: "GET",
+            type: "POST",
+            data: boardID,
             success: function (response) {
+                var newArray = [];
+                var progressArray = [];
+                var reviewArray = [];
+                var doneArray = [];
                 var cards = JSON.parse(response);
                 for (var i = 0; i < cards.length; i++) {
                     var cardObject = cards[i];
@@ -127,14 +127,15 @@ function handlingDB() {
                         doneArray.push(newCard);
                     }
                 }
-                this.orderCards(newArray);
-                this.orderCards(progressArray);
-                this.orderCards(reviewArray);
-                this.orderCards(doneArray);
-                this.appendToStatus(newArray, $("#new"));
-                this.appendToStatus(progressArray, $("#in_progress"));
-                this.appendToStatus(reviewArray, $("#review"));
-                this.appendToStatus(doneArray, $("#done"));
+                var dbInstance = new handlingDB();
+                dbInstance.orderCards(newArray);
+                dbInstance.orderCards(progressArray);
+                dbInstance.orderCards(reviewArray);
+                dbInstance.orderCards(doneArray);
+                dbInstance.appendToStatus(newArray, $("#new"));
+                dbInstance.appendToStatus(progressArray, $("#in_progress"));
+                dbInstance.appendToStatus(reviewArray, $("#review"));
+                dbInstance.appendToStatus(doneArray, $("#done"));
             }
         })
     };

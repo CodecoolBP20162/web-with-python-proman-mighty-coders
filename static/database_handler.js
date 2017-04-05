@@ -21,7 +21,7 @@ function handlingDB() {
         $.ajax({
             url: "/boards",
             type: "GET",
-            success: function(response) {
+            success: function (response) {
                 var response_json = JSON.parse(response);
                 for (var i = 0; i < response_json.length; i++) {
                     var jsonBoard = response_json[i];
@@ -83,17 +83,22 @@ function handlingDB() {
     };
 
     this.loadCards = function () {
-        var newArray = [];
-        var progressArray = [];
-        var reviewArray = [];
-        var doneArray = [];
-        for (var z = 0; z < localStorage.length; z++) {
-            if (localStorage.key(z).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(z));
-                var importBoard = JSON.parse(importBoard);
-                var cards = JSON.parse(importBoard.cards);
+        var id = location.href.slice(-2);
+        var boardID = {
+            boardId: "board" + id
+        };
+        $.ajax({
+            url: "/cards",
+            type: "POST",
+            data: boardID,
+            success: function (response) {
+                var newArray = [];
+                var progressArray = [];
+                var reviewArray = [];
+                var doneArray = [];
+                var cards = JSON.parse(response);
                 for (var i = 0; i < cards.length; i++) {
-                    var cardObject = JSON.parse(cards[i]);
+                    var cardObject = cards[i];
                     var newCard = $(cardTemplate);
                     newCard.attr("id", cardObject.card_id);
                     newCard.attr("data-parent-board", cardObject.parent_board);
@@ -110,15 +115,16 @@ function handlingDB() {
                         doneArray.push(newCard);
                     }
                 }
+                var dbInstance = new handlingDB();
+                dbInstance.orderCards(newArray);
+                dbInstance.orderCards(progressArray);
+                dbInstance.orderCards(reviewArray);
+                dbInstance.orderCards(doneArray);
+                dbInstance.appendToStatus(newArray, $("#new"));
+                dbInstance.appendToStatus(progressArray, $("#in_progress"));
+                dbInstance.appendToStatus(reviewArray, $("#review"));
+                dbInstance.appendToStatus(doneArray, $("#done"));
             }
-            this.orderCards(newArray);
-            this.orderCards(progressArray);
-            this.orderCards(reviewArray);
-            this.orderCards(doneArray);
-            this.appendToStatus(newArray, $("#new"));
-            this.appendToStatus(progressArray, $("#in_progress"));
-            this.appendToStatus(reviewArray, $("#review"));
-            this.appendToStatus(doneArray, $("#done"));
-        }
+        })
     };
 }

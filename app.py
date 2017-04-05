@@ -24,7 +24,9 @@ def return_all_boards():
 @app.route('/cards', methods=['POST'])
 def return_all_cards():
     request_form_dict = dict(request.form)
+    print(request_form_dict)
     board_id = request_form_dict['boardId'][0]
+
     return json.dumps(handle_db.make_json_list_from_cards(board_id))
 
 

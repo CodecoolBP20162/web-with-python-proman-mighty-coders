@@ -11,7 +11,7 @@ class Database:
         credentials = open(current_file_path + "/../database.txt", "r").readlines()
         database_name = credentials[0].replace("\n", "").split(":", 1)[1]
         username = credentials[1].replace("\n", "").split(":", 1)[1]
-        return PostgresqlDatabase(database=database_name, user=username)
+        return PostgresqlDatabase(database=database_name, user=username, autocommit=True, autorollback=True)
 
 
 class BaseModel(Model):

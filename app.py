@@ -41,5 +41,14 @@ def board_details(board):
     return render_template('board_details.html', title=title)
 
 
+@app.route('/cards/delete', methods=['POST'])
+def delete_card():
+    response_dict = dict(request.form)
+    parent_board = 'board' + response_dict['p_board'][0]
+    card_id = response_dict['card_id'][0]
+    handle_db.delete_card(parent_board=parent_board, card_id=card_id)
+    return 'Succesfully deleted'
+
+
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)

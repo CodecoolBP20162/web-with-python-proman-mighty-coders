@@ -97,7 +97,7 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         var card = $(cards[i]);
         card.attr('data-order', i + 1);
         card.attr('data-status', this.id);
-        dataLayerObj.removeCard($(cards[i]));
-        dataLayerObj.saveCard($(cards[i]));
+        dataLayerObj.removeCard(card);
+        dataLayerObj.saveCard(card);
     }
 });

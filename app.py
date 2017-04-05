@@ -18,13 +18,14 @@ def index():
 def board_details(board):
     title = board
     if request.method == 'POST':
-        req_form_dict = dict(request.form)
-        print(req_form_dict.keys())
-        HandleDatabase().card_fill_row(card_id=req_form_dict)
-                                       # title=req_form_dict['title'][0],
-                                       # parent_board=req_form_dict['parent_board'][0],
-                                       # status=req_form_dict['status'][0],
-                                       # order=req_form_dict['order'][0])
+
+        print(request.form['card_id'])
+
+        HandleDatabase().card_fill_row(card_id=request.form['card_id'],
+                                       title=request.form['title'],
+                                       parent_board=request.form['parent_board'],
+                                       status=request.form['status'],
+                                       order=request.form['order'])
 
     return render_template('board_details.html', title=title)
 

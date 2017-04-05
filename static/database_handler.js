@@ -47,13 +47,14 @@ function handlingDB() {
             status: card.attr("data-status"),
             order: card.attr("data-order")
         };
-        var jsonCard = JSON.stringify(cardObject);
+        // var jsonCard = JSON.stringify(cardObject);
+
         var boardID = cardObject.parent_board;
         var url = "/details/" + boardID;
         $.ajax({
             url: url,
             type: "POST",
-            data: jsonCard,
+            data: cardObject,
             success: function (response) {
                 alert('OK');
             }

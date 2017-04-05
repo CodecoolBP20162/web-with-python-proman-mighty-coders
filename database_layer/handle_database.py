@@ -38,7 +38,8 @@ class HandleDatabase:
                      order=order)
 
     def make_json_list_from_cards(self, parent_board_id):
-        cards = Cards.select()
+        print(parent_board_id)
+        cards = Cards.select().join(Boards).where(Boards.board_id == parent_board_id)
         list_of_dicts = []
         for card in cards:
             list_of_dicts.append({'card_id': card.card_id,
@@ -46,3 +47,5 @@ class HandleDatabase:
                                   'parent_board': card.parent_board,
                                   'status': card.status,
                                   'order': card.order})
+
+        return list_of_dicts

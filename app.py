@@ -53,7 +53,8 @@ def board_details(board):
 
 @app.route("/details/<board>/cards", methods=['GET', 'POST'])
 def return_all_cards(board):
-    return json.dumps(handle_db.make_json_list_from_cards("board" + board))
+    print(board)
+    return json.dumps(handle_db.make_json_list_from_cards(board))
 
 
 if __name__ == "__main__":

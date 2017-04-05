@@ -7,8 +7,8 @@ function dataLayer(currentObject) {
     this.saveCard = function(card) {
         this.imp.saveCard(card)
     };
-    this.loadCards = function() {
-        this.imp.loadCards()
+    this.loadCards = function(boardID) {
+        this.imp.loadCards(boardID)
 
     };
     this.removeCard = function(card) {

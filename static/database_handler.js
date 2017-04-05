@@ -128,7 +128,6 @@ function handlingDB() {
                 var reviewArray = [];
                 var doneArray = [];
                 var card_json = JSON.parse(response);
-                console.log(card_json)
                 for (var i = 0; i < card_json.length; i++) {
                     var cardObject = JSON.parse(card_json[i]);
                     var newCard = $(cardTemplate);
@@ -147,14 +146,15 @@ function handlingDB() {
                         doneArray.push(newCard);
                     }
                 };
-                this.orderCards(newArray);
-                this.orderCards(progressArray);
-                this.orderCards(reviewArray);
-                this.orderCards(doneArray);
-                this.appendToStatus(newArray, $("#new"));
-                this.appendToStatus(progressArray, $("#in_progress"));
-                this.appendToStatus(reviewArray, $("#review"));
-                this.appendToStatus(doneArray, $("#done"));
+                var list_handler = new handlingDB()
+                list_handler.orderCards(newArray);
+                list_handler.orderCards(progressArray);
+                list_handler.orderCards(reviewArray);
+                list_handler.orderCards(doneArray);
+                list_handler.appendToStatus(newArray, $("#new"));
+                list_handler.appendToStatus(progressArray, $("#in_progress"));
+                list_handler.appendToStatus(reviewArray, $("#review"));
+                list_handler.appendToStatus(doneArray, $("#done"));
 
             }
         });

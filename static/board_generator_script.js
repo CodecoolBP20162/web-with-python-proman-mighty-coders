@@ -71,7 +71,6 @@ $("#edit_board_modal").keypress(function(e) {
             $('#edit_board_button').click();
         };
     };
-    this.show('false')
 });
 
 $(document).on("click", ".board", function() {
@@ -99,6 +98,7 @@ $(document).on("click", "#edit_board", function(event) {
 $('#edit_board_button').click(function() {
     var title = $('#edit_board_title').val();
     var boardID = ($(".modal-body").attr("data-board"))
+    dataLayerObj.removeBoard(boardID)
     $("#" + boardID).find("h3").html(title)
     dataLayerObj.saveBoard("0" + parseInt($("#" + boardID).attr("id").match(/\d+/)))
 

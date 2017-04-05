@@ -43,8 +43,6 @@ function handlingDB() {
             status: card.attr("data-status"),
             order: card.attr("data-order")
         };
-        // var jsonCard = JSON.stringify(cardObject);
-
         var boardID = cardObject.parent_board;
         var url = "/details/" + boardID;
         $.ajax({
@@ -67,26 +65,15 @@ function handlingDB() {
     };
 
     this.removeCard = function (card) {
-        for (var z = 0; z < localStorage.length; z++) {
-            if (localStorage.key(z).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(z));
-                var importBoard = JSON.parse(importBoard);
-                var cards = JSON.parse(importBoard.cards);
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i] = JSON.parse(cards[i]);
-                }
-                for (var i = 0; i < cards.length; i++) {
-                    if (cards[i].card_id === card.attr("id")) {
-                        cards.splice(i, 1)
-                    }
-                }
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i] = JSON.stringify(cards[i]);
-                }
-                importBoard.cards = JSON.stringify(cards);
-                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
-            }
-        }
+        var cardObj = {
+            p_board: card.attr('data-parent-board'),
+            card_id: card.attr('id')
+        };
+        $.ajax({
+            url: '/cards/delete',
+            type: "POST",
+            data: cardObj
+        });
     };
 
     this.appendToStatus = function (arrayName, selector) {

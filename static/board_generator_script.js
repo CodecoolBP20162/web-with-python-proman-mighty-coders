@@ -3,7 +3,7 @@
  */
 
 
-var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper" id="board-icons"><div class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></div><div class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board" data-toggle="modal" data-target="#edit_board_modal"></div></div></div></div>';
 var dataLayerObj = new dataLayer(handlingDB);
 
 
@@ -103,4 +103,3 @@ $('#edit_board_button').click(function() {
     dataLayerObj.saveBoard("0" + parseInt($("#" + boardID).attr("id").match(/\d+/)))
 
 });
-

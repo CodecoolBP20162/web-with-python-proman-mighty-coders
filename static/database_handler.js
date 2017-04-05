@@ -47,15 +47,28 @@ function handlingDB() {
         });
     };
 
+    this.editBoard = function(id, title) {
+
+        var boardObject = {
+            board_id: id,
+            board_title: title
+        }
+
+        $.ajax({
+            url: "/edit_board",
+            type: "POST",
+            data: boardObject
+        });
+    };
+
     this.saveCard = function(card) {
         var cardObject = {
             card_id: card.attr("id"),
-            title: card.html(),
+            title: card.html().split('<div')[0],
             parent_board: card.attr("data-parent-board"),
             status: card.attr("data-status"),
             order: card.attr("data-order")
         };
-        // var jsonCard = JSON.stringify(cardObject);
 
         var boardID = cardObject.parent_board;
         var url = "/details/" + boardID;

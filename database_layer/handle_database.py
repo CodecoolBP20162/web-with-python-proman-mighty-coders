@@ -22,13 +22,17 @@ class HandleDatabase:
                                   'cards': []})
         return list_of_dicts
 
-    def card_fill_row(self, card_id, title, parent_board, status, order):
-        Cards.create(card_id=card_id,
-                     title=title,
-                     parent_board=parent_board,
-                     status=status,
-                     order=order)
-
     def delete_board(self, id_for_delete):
         board_for_delete = Boards.get(board_id=id_for_delete)
         board_for_delete.delete_instance(recursive=True)
+
+    def edit_board(self, id_for_edit, title):
+        edit = Boards.update(title=title).where(Boards.board_id == id_for_edit)
+        edit.execute()
+
+    def card_fill_row(self, card_id, title, parent_board, status, order):
+        Cards.create(card_id=card_id,
+                     title=title,
+                     parent_board="board" + parent_board,
+                     status=status,
+                     order=order)

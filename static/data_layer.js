@@ -21,7 +21,12 @@ function dataLayer(currentObject) {
         this.imp.loadBoards()
     };
 
+
     this.removeBoard = function(id) {
         this.imp.removeBoard(id)
     }
+
+    this.editBoard = function(id, title) {
+        this.imp.editBoard(id, title)
+    };
 }

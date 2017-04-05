@@ -98,8 +98,7 @@ $(document).on("click", "#edit_board", function(event) {
 $('#edit_board_button').click(function() {
     var title = $('#edit_board_title').val();
     var boardID = ($(".modal-body").attr("data-board"))
-    dataLayerObj.removeBoard(boardID)
     $("#" + boardID).find("h3").html(title)
-    dataLayerObj.saveBoard("0" + parseInt($("#" + boardID).attr("id").match(/\d+/)))
-
+    edit_title = $('#edit_board_title').val()
+    dataLayerObj.editBoard(boardID, edit_title)
 });

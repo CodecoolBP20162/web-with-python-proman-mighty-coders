@@ -76,9 +76,6 @@ function handlingDB() {
             url: url,
             type: "POST",
             data: cardObject,
-            success: function(response) {
-                alert('OK');
-            }
         });
 
     };
@@ -120,18 +117,20 @@ function handlingDB() {
         }
     };
 
-    this.loadCards = function() {
-        var newArray = [];
-        var progressArray = [];
-        var reviewArray = [];
-        var doneArray = [];
-        for (var z = 0; z < localStorage.length; z++) {
-            if (localStorage.key(z).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(z));
-                var importBoard = JSON.parse(importBoard);
-                var cards = JSON.parse(importBoard.cards);
-                for (var i = 0; i < cards.length; i++) {
-                    var cardObject = JSON.parse(cards[i]);
+    this.loadCards = function(boardID) {
+
+        $.ajax({
+            url: "/details/" + boardID + "/cards",
+            type: "GET",
+            success: function(response) {
+                var newArray = [];
+                var progressArray = [];
+                var reviewArray = [];
+                var doneArray = [];
+                var card_json = JSON.parse(response);
+                console.log(card_json)
+                for (var i = 0; i < card_json.length; i++) {
+                    var cardObject = JSON.parse(card_json[i]);
                     var newCard = $(cardTemplate);
                     newCard.attr("id", cardObject.card_id);
                     newCard.attr("data-parent-board", cardObject.parent_board);
@@ -147,16 +146,17 @@ function handlingDB() {
                     } else if (newCard.attr("data-status") === "done") {
                         doneArray.push(newCard);
                     }
-                }
+                };
+                this.orderCards(newArray);
+                this.orderCards(progressArray);
+                this.orderCards(reviewArray);
+                this.orderCards(doneArray);
+                this.appendToStatus(newArray, $("#new"));
+                this.appendToStatus(progressArray, $("#in_progress"));
+                this.appendToStatus(reviewArray, $("#review"));
+                this.appendToStatus(doneArray, $("#done"));
+
             }
-            this.orderCards(newArray);
-            this.orderCards(progressArray);
-            this.orderCards(reviewArray);
-            this.orderCards(doneArray);
-            this.appendToStatus(newArray, $("#new"));
-            this.appendToStatus(progressArray, $("#in_progress"));
-            this.appendToStatus(reviewArray, $("#review"));
-            this.appendToStatus(doneArray, $("#done"));
-        }
+        });
     };
 };

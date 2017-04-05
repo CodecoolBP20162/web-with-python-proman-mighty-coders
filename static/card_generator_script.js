@@ -58,7 +58,7 @@ var create = function(title) {
 };
 
 var display = function() {
-    dataLayerObj.loadCards();
+    dataLayerObj.loadCards("board" + getID());
 };
 
 $(document).ready(function() {
@@ -128,7 +128,7 @@ $(document).on("click", "#delete_card", function(event) {
     console.log(cardID)
     dataLayerObj.removeCard($("#" + cardID))
     $(".card").remove()
-    dataLayerObj.loadCards()
+    dataLayerObj.loadCards("board" + getID())
 });
 
 $(document).on("click", "#edit_card", function(event) {

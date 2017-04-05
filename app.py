@@ -51,5 +51,10 @@ def board_details(board):
     return render_template('board_details.html', title=title)
 
 
+@app.route("/details/<board>/cards", methods=['GET', 'POST'])
+def return_all_cards(board):
+    return json.dumps(handle_db.make_json_list_from_cards("board" + board))
+
+
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)

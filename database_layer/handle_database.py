@@ -21,11 +21,10 @@ class HandleDatabase:
                                   'cards': []})
         return list_of_dicts
 
-
     def card_fill_row(self, card_id, title, parent_board, status, order):
         Cards.create(card_id=card_id,
                      title=title,
-                     parent_board=parent_board,
+                     parent_board=Boards.select().where(Boards.board_id == parent_board),
                      status=status,
                      order=order)
 
@@ -35,10 +34,11 @@ class HandleDatabase:
         for card in all_cards:
             list_of_dicts.append({'board_id': card.card_id,
                                   'title': card.title,
-                                  'parent_board_id': card.parent_board_id,
+                                  'parent_board_id': card.parent_board.board_id,
                                   'status': card.status,
                                   'order': card.order})
         return list_of_dicts
+
 
     def delete_card(self, parent_board, card_id):
         card = Cards.select().join(Boards).where(Boards.board_id == parent_board and Cards.card_id == card_id).get()

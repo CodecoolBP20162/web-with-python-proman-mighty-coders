@@ -32,12 +32,12 @@ def return_all_cards():
 def board_details(board):
     title = board
     if request.method == 'POST':
-
-        HandleDatabase().card_fill_row(card_id=request.form['card_id'],
-                                       title=request.form['title'],
-                                       parent_board=request.form['parent_board'],
-                                       status=request.form['status'],
-                                       order=request.form['order'])
+        parent_board_id = 'board' + request.form['parent_board']
+        handle_db.card_fill_row(card_id=request.form['card_id'],
+                                title=request.form['title'],
+                                parent_board=parent_board_id,
+                                status=request.form['status'],
+                                order=request.form['order'])
     return render_template('board_details.html', title=title)
 
 

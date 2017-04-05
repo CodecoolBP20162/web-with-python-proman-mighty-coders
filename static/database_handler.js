@@ -89,26 +89,14 @@ function handlingDB() {
     };
 
     this.removeCard = function(card) {
-        for (var z = 0; z < localStorage.length; z++) {
-            if (localStorage.key(z).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(z));
-                var importBoard = JSON.parse(importBoard);
-                var cards = JSON.parse(importBoard.cards);
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i] = JSON.parse(cards[i]);
-                }
-                for (var i = 0; i < cards.length; i++) {
-                    if (cards[i].card_id === card.attr("id")) {
-                        cards.splice(i, 1)
-                    }
-                }
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i] = JSON.stringify(cards[i]);
-                }
-                importBoard.cards = JSON.stringify(cards);
-                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
-            }
+        var cardObject = {
+            card_id: card.attr("id")
         }
+        $.ajax({
+            url: '/details/delete_card',
+            type: "POST",
+            data: cardObject
+        });
     };
 
     this.appendToStatus = function(arrayName, selector) {
@@ -123,19 +111,20 @@ function handlingDB() {
             url: "/details/" + boardID + "/cards",
             type: "GET",
             success: function(response) {
+                var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
                 var newArray = [];
                 var progressArray = [];
                 var reviewArray = [];
                 var doneArray = [];
                 var card_json = JSON.parse(response);
                 for (var i = 0; i < card_json.length; i++) {
-                    var cardObject = JSON.parse(card_json[i]);
+                    var cardObject = card_json[i];
                     var newCard = $(cardTemplate);
                     newCard.attr("id", cardObject.card_id);
                     newCard.attr("data-parent-board", cardObject.parent_board);
                     newCard.attr("data-status", cardObject.status);
                     newCard.attr("data-order", cardObject.order);
-                    newCard.html(cardObject.title);
+                    newCard.html(cardObject.title + buttons);
                     if (newCard.attr("data-status") === "new") {
                         newArray.push(newCard);
                     } else if (newCard.attr("data-status") === "in_progress") {

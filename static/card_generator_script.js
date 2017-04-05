@@ -125,7 +125,6 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
 $(document).on("click", "#delete_card", function(event) {
     event.stopPropagation();
     var cardID = $(this).parent().parent().attr('id');
-    console.log(cardID)
     dataLayerObj.removeCard($("#" + cardID))
     $(".card").remove()
     dataLayerObj.loadCards("board" + getID())

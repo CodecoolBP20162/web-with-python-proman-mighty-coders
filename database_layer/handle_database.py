@@ -38,14 +38,16 @@ class HandleDatabase:
                      order=order)
 
     def make_json_list_from_cards(self, parent_board_id):
-        print(parent_board_id)
         cards = Cards.select().join(Boards).where(Boards.board_id == parent_board_id)
-        list_of_dicts = []
+        list_of_cards = []
         for card in cards:
-            list_of_dicts.append({'card_id': card.card_id,
+            list_of_cards.append({'card_id': card.card_id,
                                   'title': card.title,
-                                  'parent_board': card.parent_board,
+                                  'parent_board': card.parent_board.board_id,
                                   'status': card.status,
                                   'order': card.order})
+        return list_of_cards
 
-        return list_of_dicts
+    def delete_card(self, id_for_delete):
+        card_for_delete = Cards.get(card_id=id_for_delete)
+        card_for_delete.delete_instance()

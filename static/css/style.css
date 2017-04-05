@@ -148,3 +148,115 @@ body {
     transform: scale(1.1);
     color: #173e43;
 }
+
+.glyphicon-trash,
+.glyphicon-pencil {
+    color: white;
+}
+
+#delete_board {
+    left: 73%;
+}
+
+#edit_board {
+    left: 81%;
+}
+
+.edit-delete-wrapper {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.board:hover .edit-delete-wrapper {
+    visibility: visible;
+    opacity: 1;
+}
+
+.card:hover .edit-delete-wrapper {
+    visibility: visible;
+    opacity: 1;
+}
+
+#card-icons {
+    left: 100%;
+    float: right;
+    padding-right: 3%;
+}
+
+#delete_card {
+    padding-right: 10px;
+}
+
+
+/* The switch - the box around the slider */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    display: inline-table;
+    vertical-align: middle;
+}
+
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    display: none;
+}
+
+
+/* The slider */
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #3fb0ac;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #3fb0ac;
+    ;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+    >>>>>>>Stashed changes
+}

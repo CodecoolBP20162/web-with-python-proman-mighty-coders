@@ -10,10 +10,9 @@ handle_db = HandleDatabase()
 def index():
     if request.method == 'POST':
         req_form_dict = dict(request.form)
-        handle_db.fill_row(board_id=req_form_dict['board_id'][0],
-                           title_id=req_form_dict['title_id'][0],
-                           title=req_form_dict['title'][0])
-        return json.dumps(handle_db.make_json_list_from_boards())
+        handle_db.board_fill_row(board_id=req_form_dict['board_id'][0],
+                                 title_id=req_form_dict['title_id'][0],
+                                 title=req_form_dict['title'][0])
     return render_template('boards.html')
 
 

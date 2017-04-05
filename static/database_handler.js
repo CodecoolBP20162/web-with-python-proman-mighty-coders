@@ -3,7 +3,7 @@
  */
 function handlingDB() {
 
-    this.saveBoard = function (num) {
+    this.saveBoard = function(num) {
         var boardObject = {
             board_id: document.getElementById("board" + num).id,
             title_id: document.getElementById("title" + num).id,
@@ -17,7 +17,7 @@ function handlingDB() {
         });
     };
 
-    this.loadBoards = function () {
+    this.loadBoards = function() {
         $.ajax({
             url: "/boards",
             type: "GET",
@@ -35,103 +35,111 @@ function handlingDB() {
         });
     };
 
-    this.saveCard = function (card) {
-        var cardObject = {
-            card_id: card.attr("id"),
-            title: card.html(),
-            parent_board: card.attr("data-parent-board"),
-            status: card.attr("data-status"),
-            order: card.attr("data-order")
-        };
-        // var jsonCard = JSON.stringify(cardObject);
-
-        var boardID = cardObject.parent_board;
-        var url = "/details/" + boardID;
+    this.removeBoard = function(id) {
         $.ajax({
-            url: url,
+            url: "/delete_board",
             type: "POST",
-            data: cardObject,
-            success: function (response) {
-                alert('OK');
-            }
+            data: id
         });
 
-    };
+        this.saveCard = function(card) {
+            var cardObject = {
+                card_id: card.attr("id"),
+                title: card.html(),
+                parent_board: card.attr("data-parent-board"),
+                status: card.attr("data-status"),
+                order: card.attr("data-order")
+            };
+            // var jsonCard = JSON.stringify(cardObject);
 
-    this.orderCards = function (list) {
-        list.sort(sort_list);
+            var boardID = cardObject.parent_board;
+            var url = "/details/" + boardID;
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: cardObject,
+                success: function(response) {
+                    alert('OK');
+                }
+            });
 
-        function sort_list(a, b) {
-            return (b.attr("data-order") < a.attr("data-order")) ? (1) : (-1);
-        }
-    };
+        };
 
-    this.removeCard = function (card) {
-        for (var z = 0; z < localStorage.length; z++) {
-            if (localStorage.key(z).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(z));
-                var importBoard = JSON.parse(importBoard);
-                var cards = JSON.parse(importBoard.cards);
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i] = JSON.parse(cards[i]);
-                }
-                for (var i = 0; i < cards.length; i++) {
-                    if (cards[i].card_id === card.attr("id")) {
-                        cards.splice(i, 1)
-                    }
-                }
-                for (var i = 0; i < cards.length; i++) {
-                    cards[i] = JSON.stringify(cards[i]);
-                }
-                importBoard.cards = JSON.stringify(cards);
-                localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
+        this.orderCards = function(list) {
+            list.sort(sort_list);
+
+            function sort_list(a, b) {
+                return (b.attr("data-order") < a.attr("data-order")) ? (1) : (-1);
             }
-        }
-    };
+        };
 
-    this.appendToStatus = function (arrayName, selector) {
-        for (var i = 0; i < arrayName.length; i++) {
-            selector.append(arrayName[i]);
-        }
-    };
-
-    this.loadCards = function () {
-        var newArray = [];
-        var progressArray = [];
-        var reviewArray = [];
-        var doneArray = [];
-        for (var z = 0; z < localStorage.length; z++) {
-            if (localStorage.key(z).includes(getID())) {
-                var importBoard = localStorage.getItem(localStorage.key(z));
-                var importBoard = JSON.parse(importBoard);
-                var cards = JSON.parse(importBoard.cards);
-                for (var i = 0; i < cards.length; i++) {
-                    var cardObject = JSON.parse(cards[i]);
-                    var newCard = $(cardTemplate);
-                    newCard.attr("id", cardObject.card_id);
-                    newCard.attr("data-parent-board", cardObject.parent_board);
-                    newCard.attr("data-status", cardObject.status);
-                    newCard.attr("data-order", cardObject.order);
-                    newCard.html(cardObject.title);
-                    if (newCard.attr("data-status") === "new") {
-                        newArray.push(newCard);
-                    } else if (newCard.attr("data-status") === "in_progress") {
-                        progressArray.push(newCard);
-                    } else if (newCard.attr("data-status") === "review") {
-                        reviewArray.push(newCard);
-                    } else if (newCard.attr("data-status") === "done") {
-                        doneArray.push(newCard);
+        this.removeCard = function(card) {
+            for (var z = 0; z < localStorage.length; z++) {
+                if (localStorage.key(z).includes(getID())) {
+                    var importBoard = localStorage.getItem(localStorage.key(z));
+                    var importBoard = JSON.parse(importBoard);
+                    var cards = JSON.parse(importBoard.cards);
+                    for (var i = 0; i < cards.length; i++) {
+                        cards[i] = JSON.parse(cards[i]);
                     }
+                    for (var i = 0; i < cards.length; i++) {
+                        if (cards[i].card_id === card.attr("id")) {
+                            cards.splice(i, 1)
+                        }
+                    }
+                    for (var i = 0; i < cards.length; i++) {
+                        cards[i] = JSON.stringify(cards[i]);
+                    }
+                    importBoard.cards = JSON.stringify(cards);
+                    localStorage.setItem("board" + getID(), JSON.stringify(importBoard));
                 }
             }
-            this.orderCards(newArray);
-            this.orderCards(progressArray);
-            this.orderCards(reviewArray);
-            this.orderCards(doneArray);
-            this.appendToStatus(newArray, $("#new"));
-            this.appendToStatus(progressArray, $("#in_progress"));
-            this.appendToStatus(reviewArray, $("#review"));
-            this.appendToStatus(doneArray, $("#done"));
-        }
+        };
+
+        this.appendToStatus = function(arrayName, selector) {
+            for (var i = 0; i < arrayName.length; i++) {
+                selector.append(arrayName[i]);
+            }
+        };
+
+        this.loadCards = function() {
+            var newArray = [];
+            var progressArray = [];
+            var reviewArray = [];
+            var doneArray = [];
+            for (var z = 0; z < localStorage.length; z++) {
+                if (localStorage.key(z).includes(getID())) {
+                    var importBoard = localStorage.getItem(localStorage.key(z));
+                    var importBoard = JSON.parse(importBoard);
+                    var cards = JSON.parse(importBoard.cards);
+                    for (var i = 0; i < cards.length; i++) {
+                        var cardObject = JSON.parse(cards[i]);
+                        var newCard = $(cardTemplate);
+                        newCard.attr("id", cardObject.card_id);
+                        newCard.attr("data-parent-board", cardObject.parent_board);
+                        newCard.attr("data-status", cardObject.status);
+                        newCard.attr("data-order", cardObject.order);
+                        newCard.html(cardObject.title);
+                        if (newCard.attr("data-status") === "new") {
+                            newArray.push(newCard);
+                        } else if (newCard.attr("data-status") === "in_progress") {
+                            progressArray.push(newCard);
+                        } else if (newCard.attr("data-status") === "review") {
+                            reviewArray.push(newCard);
+                        } else if (newCard.attr("data-status") === "done") {
+                            doneArray.push(newCard);
+                        }
+                    }
+                }
+                this.orderCards(newArray);
+                this.orderCards(progressArray);
+                this.orderCards(reviewArray);
+                this.orderCards(doneArray);
+                this.appendToStatus(newArray, $("#new"));
+                this.appendToStatus(progressArray, $("#in_progress"));
+                this.appendToStatus(reviewArray, $("#review"));
+                this.appendToStatus(doneArray, $("#done"));
+            }
+        };
     };
-}
+};

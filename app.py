@@ -21,6 +21,12 @@ def return_all_boards():
     return json.dumps(handle_db.make_json_list_from_boards())
 
 
+@app.route('/delete_board', methods=['POST'])
+def delete_board():
+    board_for_delete = request.form
+    print(board_for_delete)
+
+
 @app.route("/details/<board>", methods=['GET', 'POST'])
 def board_details(board):
     title = board
@@ -28,7 +34,8 @@ def board_details(board):
 
         HandleDatabase().card_fill_row(card_id=request.form['card_id'],
                                        title=request.form['title'],
-                                       parent_board=request.form['parent_board'],
+                                       parent_board=request.form[
+                                           'parent_board'],
                                        status=request.form['status'],
                                        order=request.form['order'])
 

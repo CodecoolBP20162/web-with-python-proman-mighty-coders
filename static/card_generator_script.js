@@ -1,7 +1,5 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
 var dataLayerObj = new dataLayer(handlingDB);
-var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
-
 
 
 var getID = function() {
@@ -51,7 +49,7 @@ var create = function(title) {
     newCard.attr("data-order", order);
     var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
-    newCard.html(title + buttons);
+    newCard.html(title);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
     dataLayerObj.saveCard($("#card" + num));
@@ -87,24 +85,6 @@ $("#create_card_modal").on("hidden.bs.modal", function() {
     $('#save_card_button').attr("disabled", "disabled");
 });
 
-$("#create_card_modal").keypress(function(e) {
-    if ($('#new_card_title').val().length > 0) {
-        if (e.which == 13) {
-            $('#save_card_button').click();
-        };
-    };
-});
-
-$("#edit_card_modal").keypress(function(e) {
-    if ($('#edit_card_title').val().length > 0) {
-        if (e.which == 13) {
-            $('#edit_card_button').click();
-        };
-    };
-    this.show('false')
-});
-
-
 $(function() {
     $("#new, #in_progress, #review, #done").sortable({
         connectWith: ".status_list"
@@ -120,30 +100,4 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         dataLayerObj.removeCard($(cards[i]));
         dataLayerObj.saveCard($(cards[i]));
     }
-});
-
-$(document).on("click", "#delete_card", function(event) {
-    event.stopPropagation();
-    var cardID = $(this).parent().parent().attr('id');
-    console.log(cardID)
-    dataLayerObj.removeCard($("#" + cardID))
-    $(".card").remove()
-    dataLayerObj.loadCards()
-});
-
-$(document).on("click", "#edit_card", function(event) {
-    event.stopPropagation();
-    var editCardID = $(this).parent().parent().attr('id');
-    $("#edit_card_title").val($(this).parent().parent().html().split('<div')[0]);
-    $(".modal-body").attr("data-card", editCardID);
-});
-
-
-$('#edit_card_button').click(function() {
-    var title = $('#edit_card_title').val();
-    var cardID = ($(".modal-body").attr("data-card"))
-    dataLayerObj.removeCard($("#" + cardID))
-    $("#" + cardID).html(title + buttons)
-    dataLayerObj.saveCard($("#" + cardID))
-
 });

@@ -4,8 +4,7 @@
 
 function handlingLocalStorage() {
 
-
-    this.saveBoard = function(num) {
+    this.saveBoard = function (num) {
         var boardObject = {
             board_id: document.getElementById("board" + num).id,
             title_id: document.getElementById("title" + num).id,
@@ -16,7 +15,7 @@ function handlingLocalStorage() {
         localStorage.setItem(document.getElementById("board" + num).id, jsonBoard);
     };
 
-    this.loadBoards = function() {
+    this.loadBoards = function () {
         if (localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++) {
                 if (localStorage.key(i).includes("board")) {
@@ -34,14 +33,10 @@ function handlingLocalStorage() {
         }
     };
 
-    this.removeBoard = function(id) {
-        localStorage.removeItem(id);
-    };
-
-    this.saveCard = function(card) {
+    this.saveCard = function (card) {
         var cardObject = {
             card_id: card.attr("id"),
-            title: card.html().split('<div')[0],
+            title: card.html(),
             parent_board: card.attr("data-parent-board"),
             status: card.attr("data-status"),
             order: card.attr("data-order")
@@ -58,7 +53,7 @@ function handlingLocalStorage() {
         }
     };
 
-    this.orderCards = function(list) {
+    this.orderCards = function (list) {
         list.sort(sort_list);
 
         function sort_list(a, b) {
@@ -66,7 +61,7 @@ function handlingLocalStorage() {
         }
     };
 
-    this.removeCard = function(card) {
+    this.removeCard = function (card) {
         for (var z = 0; z < localStorage.length; z++) {
             if (localStorage.key(z).includes(getID())) {
                 var importBoard = localStorage.getItem(localStorage.key(z));
@@ -89,14 +84,13 @@ function handlingLocalStorage() {
         }
     };
 
-    this.appendToStatus = function(arrayName, selector) {
+    this.appendToStatus = function (arrayName, selector) {
         for (var i = 0; i < arrayName.length; i++) {
             selector.append(arrayName[i]);
         }
     };
 
-    this.loadCards = function() {
-        var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
+    this.loadCards = function () {
         var newArray = [];
         var progressArray = [];
         var reviewArray = [];
@@ -113,7 +107,7 @@ function handlingLocalStorage() {
                     newCard.attr("data-parent-board", cardObject.parent_board);
                     newCard.attr("data-status", cardObject.status);
                     newCard.attr("data-order", cardObject.order);
-                    newCard.html(cardObject.title + buttons);
+                    newCard.html(cardObject.title);
                     if (newCard.attr("data-status") === "new") {
                         newArray.push(newCard);
                     } else if (newCard.attr("data-status") === "in_progress") {

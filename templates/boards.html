@@ -1,19 +1,19 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="container">
-    <div class=row>
-        <div class="col-sm-11">
-            <div class=row id="board_row">
-            </div>
+<div class=row>
+    <div class="col-sm-11">
+        <div class=row id="board_row">
         </div>
-        <div class="col-sm-1">
-            <button title="Add new" id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_board_modal">
+    </div>
+    <div class="col-sm-1">
+        <button title="Add new" id="modal_button" type="button" class="btn" data-toggle="modal" data-target="#create_board_modal">
             <div class="circle">
                 <div class="circle_element">+</div>
             </div>
         </button>
-        </div>
     </div>
 </div>
+    </div>
 
 
 <div class="col-sm-10"></div>
@@ -23,7 +23,7 @@
 <div class="col-sm-1"></div>
 
 
-<!--Save Modal -->
+<!-- Modal -->
 <div id="create_board_modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -40,28 +40,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button id="save_board_button" type="button" class="btn btn-info" data-dismiss="modal">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Edit Modal -->
-<div id="edit_board_modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit board</h4>
-            </div>
-            <div class="modal-body" data-board="">
-                <label>Board title:</label>
-                <input required minlength="1" id="edit_board_title" type="text" maxlength="20" placeholder="Title" autofocus>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button id="edit_board_button" type="button" class="btn btn-info" data-dismiss="modal">Edit</button>
             </div>
         </div>
     </div>

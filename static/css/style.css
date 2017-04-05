@@ -7,9 +7,13 @@ body {
     background-color: #173e43;
 }
 
+#no-boards {
+
+}
+
 .board {
     border-radius: 5px;
-    background-color: #3fb0ac;
+    background-color:#3fb0ac;
     transition: background-color 0.5s ease;
     padding-left: 8px;
     margin: 10px;
@@ -19,14 +23,10 @@ body {
     max-width: 100%;
     width: 100%;
     overflow: hidden;
-    -webkit-transition: all 1s ease;
-    /* Safari and Chrome */
-    -moz-transition: all 1s ease;
-    /* Firefox */
-    -ms-transition: all 1s ease;
-    /* IE 9 */
-    -o-transition: all 1s ease;
-    /* Opera */
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
     transition: all 1s ease;
 }
 
@@ -44,14 +44,10 @@ body {
     background-color: #3fb0ac;
     display: inline-table;
     vertical-align: middle;
-    -webkit-transition: all 1s ease;
-    /* Safari and Chrome */
-    -moz-transition: all 1s ease;
-    /* Firefox */
-    -ms-transition: all 1s ease;
-    /* IE 9 */
-    -o-transition: all 1s ease;
-    /* Opera */
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
     transition: all 1s ease;
 }
 
@@ -60,11 +56,12 @@ body {
     color: white;
     text-align: center;
     font-size: 40px;
+
 }
 
 .board:hover,
 .circle:hover {
-    background-color: #173e43;
+    background-color:#173e43;
     -webkit-transform: scale(1.05);
     -ms-transform: scale(1.05);
     -moz-transform: scale(1.05);
@@ -127,61 +124,19 @@ body {
     font-size: 50px;
     margin-left: 10px;
     color: #3fb0ac;
-    -webkit-transition: all 1s ease;
-    /* Safari and Chrome */
-    -moz-transition: all 1s ease;
-    /* Firefox */
-    -ms-transition: all 1s ease;
-    /* IE 9 */
-    -o-transition: all 1s ease;
-    /* Opera */
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
     transition: all 1s ease;
 }
 
-.glyphicon-arrow-left:hover {
+.glyphicon-arrow-left:hover
+{
     z-index: 2;
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     -moz-transform: scale(1.1);
     transform: scale(1.1);
     color: #173e43;
-}
-
-.glyphicon-trash,
-.glyphicon-pencil {
-    color: white;
-}
-
-#delete_board {
-    left: 73%;
-}
-
-#edit_board {
-    left: 81%;
-}
-
-.edit-delete-wrapper {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
-}
-
-.board:hover .edit-delete-wrapper {
-    visibility: visible;
-    opacity: 1;
-}
-
-.card:hover .edit-delete-wrapper {
-    visibility: visible;
-    opacity: 1;
-}
-
-#card-icons {
-    left: 100%;
-    float: right;
-    padding-right: 3%;
-}
-
-#delete_card {
-    padding-right: 10px;
 }

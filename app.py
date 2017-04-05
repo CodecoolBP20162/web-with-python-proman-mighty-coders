@@ -20,7 +20,7 @@ def index():
 def return_all_boards():
     return json.dumps(handle_db.make_json_list_from_boards())
 
-  
+
 @app.route('/cards', methods=['POST'])
 def return_all_cards():
     request_form_dict = dict(request.form)
@@ -32,6 +32,7 @@ def return_all_cards():
 def board_details(board):
     title = board
     if request.method == 'POST':
+
         HandleDatabase().card_fill_row(card_id=request.form['card_id'],
                                        title=request.form['title'],
                                        parent_board=request.form['parent_board'],

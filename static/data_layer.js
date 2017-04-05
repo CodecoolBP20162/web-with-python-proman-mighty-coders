@@ -9,7 +9,6 @@ function dataLayer(currentObject) {
     };
     this.loadCards = function() {
         this.imp.loadCards()
-
     };
     this.removeCard = function(card) {
         this.imp.removeCard(card)
@@ -20,8 +19,4 @@ function dataLayer(currentObject) {
     this.loadBoards = function() {
         this.imp.loadBoards()
     };
-
-    this.removeBoard = function(id) {
-        this.imp.removeBoard(id)
-    }
 }

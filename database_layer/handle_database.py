@@ -21,9 +21,6 @@ class HandleDatabase:
                                   'cards': []})
         return list_of_dicts
 
-    def delete_card(self, parent_board, card_id):
-        card = Cards.select().join(Boards).where(Boards.board_id == parent_board and Cards.card_id == card_id).get()
-        card.delete_instance()
 
     def card_fill_row(self, card_id, title, parent_board, status, order):
         Cards.create(card_id=card_id,

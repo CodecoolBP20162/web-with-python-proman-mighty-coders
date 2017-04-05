@@ -2,6 +2,7 @@ from database_layer.models import *
 
 
 class HandleDatabase:
+
     def __init__(self):
         self.db = Database().db
         self.db.connect()
@@ -27,3 +28,7 @@ class HandleDatabase:
                      parent_board=parent_board,
                      status=status,
                      order=order)
+
+    def delete_board(self, id_for_delete):
+        board_for_delete = Boards.get(board_id=id_for_delete)
+        board_for_delete.delete_instance(recursive=True)

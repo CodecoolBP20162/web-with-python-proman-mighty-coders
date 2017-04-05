@@ -23,8 +23,16 @@ def return_all_boards():
 
 @app.route('/delete_board', methods=['POST'])
 def delete_board():
-    board_for_delete = request.form
-    print(board_for_delete)
+    board_for_delete = dict(request.form)
+    handle_db.delete_board(board_for_delete['board_id'][0])
+    return "delete successfull"
+
+
+@app.route('/edit_board', methods=['POST'])
+def edit_board():
+    board_for_edit = dict(request.form)
+    handle_db.edit_board(board_for_edit['board_id'][0])
+    return "edit successfull"
 
 
 @app.route("/details/<board>", methods=['GET', 'POST'])

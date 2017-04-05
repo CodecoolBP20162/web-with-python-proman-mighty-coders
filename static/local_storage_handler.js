@@ -38,6 +38,11 @@ function handlingLocalStorage() {
         localStorage.removeItem(id);
     };
 
+    this.editBoard = function(id, title) {
+        var new_id = id.substr(5, 6)
+        this.saveBoard(new_id, title);
+    };
+
     this.saveCard = function(card) {
         var cardObject = {
             card_id: card.attr("id"),
@@ -88,6 +93,12 @@ function handlingLocalStorage() {
             }
         }
     };
+
+    this.editCard = function(card) {
+        this.removeCard(card);
+        this.saveCard(card);
+    };
+
 
     this.appendToStatus = function(arrayName, selector) {
         for (var i = 0; i < arrayName.length; i++) {

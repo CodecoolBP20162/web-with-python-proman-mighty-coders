@@ -21,6 +21,16 @@ def return_all_boards():
     return json.dumps(handle_db.make_json_list_from_boards())
 
 
+@app.route('/cards', methods=['GET', 'POST'])
+def return_all_cards():
+    board_id = ""
+    if request.method == 'POST':
+        request_form_dict = dict(request.form)
+        actual_board_id = request_form_dict['data'][0]
+        board_id = actual_board_id
+    return json.dumps(handle_db.make_json_list_from_cards(board_id))
+
+
 @app.route("/details/<board>", methods=['GET', 'POST'])
 def board_details(board):
     title = board
@@ -31,7 +41,6 @@ def board_details(board):
                                        parent_board=request.form['parent_board'],
                                        status=request.form['status'],
                                        order=request.form['order'])
-
     return render_template('board_details.html', title=title)
 
 

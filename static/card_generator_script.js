@@ -1,6 +1,7 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
+var dataLayerObj = new dataLayer(handlingDB);
 var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
-var dataLayerObj = new dataLayer(handlingLocalStorage);
+
 
 
 var getID = function() {

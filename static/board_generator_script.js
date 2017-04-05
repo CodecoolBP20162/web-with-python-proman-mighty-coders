@@ -2,8 +2,10 @@
  * Created by okocsis90 on 2017.03.20..
  */
 
-var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3><div class="edit-delete-wrapper" id="board-icons"><div class="glyphicon glyphicon-trash" id="delete_board" title="Delete board"></div><div class="glyphicon glyphicon-pencil" id="edit_board" title="Edit board" data-toggle="modal" data-target="#edit_board_modal"></div></div></div></div>';
-var dataLayerObj = new dataLayer(handlingLocalStorage);
+
+var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div class="board"><h3 class="board_title" id ="title">Project title</h3></div></div>';
+var dataLayerObj = new dataLayer(handlingDB);
+
 
 var create = function(title) {
     var num;
@@ -78,6 +80,7 @@ $(document).on("click", ".board", function() {
     location.href = '/details/' + boardID;
 });
 
+
 $(document).on("click", "#delete_board", function(event) {
     event.stopPropagation();
     var boardID = $(this).parent().parent().parent().attr('id');
@@ -100,3 +103,4 @@ $('#edit_board_button').click(function() {
     dataLayerObj.saveBoard("0" + parseInt($("#" + boardID).attr("id").match(/\d+/)))
 
 });
+

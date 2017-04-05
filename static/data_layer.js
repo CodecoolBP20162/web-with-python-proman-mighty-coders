@@ -17,10 +17,10 @@ function dataLayer(currentObject) {
     this.saveBoard = function(num) {
         this.imp.saveBoard(num)
     };
+
     this.loadBoards = function() {
         this.imp.loadBoards()
     };
-
 
     this.removeBoard = function(id) {
         this.imp.removeBoard(id)
@@ -28,5 +28,9 @@ function dataLayer(currentObject) {
 
     this.editBoard = function(id, title) {
         this.imp.editBoard(id, title)
+    };
+
+    this.editCard = function(id, title, status, order) {
+        this.imp.editCard(id, title, status, order)
     };
 }

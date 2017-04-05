@@ -31,8 +31,8 @@ def delete_board():
 @app.route('/edit_board', methods=['POST'])
 def edit_board():
     board_for_edit = dict(request.form)
-    handle_db.edit_board(board_for_edit['board_id'][
-                         0], board_for_edit['board_title'][0])
+    handle_db.edit_board(board_for_edit['board_id'][0],
+                         board_for_edit['board_title'][0])
     return "edit successfull"
 
 
@@ -59,8 +59,20 @@ def return_all_cards(parent_board):
 @app.route('/details/delete_card', methods=['POST'])
 def delete_card():
     card_for_delete = dict(request.form)
-    handle_db.delete_card(card_for_delete['card_id'][0])
+    handle_db.delete_card(card_for_delete['card_id'][0],
+                          card_for_delete['parent_board'][0])
     return "delete successfull"
+
+
+@app.route('/details/edit_card', methods=['POST'])
+def edit_card():
+    card_for_edit = dict(request.form)
+    handle_db.edit_card(card_for_edit['id'][0],
+                        card_for_edit['parent_board'][0],
+                        card_for_edit['title'][0],
+                        card_for_edit['status'][0],
+                        card_for_edit['order'][0])
+    return "edit successfull"
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)

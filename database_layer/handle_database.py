@@ -48,6 +48,13 @@ class HandleDatabase:
                                   'order': card.order})
         return list_of_cards
 
-    def delete_card(self, id_for_delete):
-        card_for_delete = Cards.get(card_id=id_for_delete)
+    def delete_card(self, id_for_delete, parent_board):
+        card_for_delete = Cards.get((Cards.card_id == id_for_delete) & (
+            Cards.parent_board == parent_board))
         card_for_delete.delete_instance()
+
+    def edit_card(self, id_for_edit, parent_board, title, status, order):
+        edit = Cards.update(title=title, status=status, order=order).where(
+            (Cards.card_id == id_for_edit) & (
+                Cards.parent_board == parent_board))
+        edit.execute()

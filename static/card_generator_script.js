@@ -101,7 +101,6 @@ $("#edit_card_modal").keypress(function(e) {
             $('#edit_card_button').click();
         };
     };
-    this.show('false')
 });
 
 
@@ -117,8 +116,7 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         var card = $(cards[i]);
         card.attr('data-order', i + 1);
         card.attr('data-status', this.id);
-        dataLayerObj.removeCard($(cards[i]));
-        dataLayerObj.saveCard($(cards[i]));
+        dataLayerObj.editCard($(cards[i]));
     }
 });
 
@@ -141,8 +139,7 @@ $(document).on("click", "#edit_card", function(event) {
 $('#edit_card_button').click(function() {
     var title = $('#edit_card_title').val();
     var cardID = ($(".modal-body").attr("data-card"))
-    dataLayerObj.removeCard($("#" + cardID))
     $("#" + cardID).html(title + buttons)
-    dataLayerObj.saveCard($("#" + cardID))
+    dataLayerObj.editCard($("#" + cardID))
 
 });

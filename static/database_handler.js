@@ -90,10 +90,30 @@ function handlingDB() {
 
     this.removeCard = function(card) {
         var cardObject = {
-            card_id: card.attr("id")
+            card_id: card.attr("id"),
+            parent_board: card.attr("data-parent-board")
         }
         $.ajax({
             url: '/details/delete_card',
+            type: "POST",
+            data: cardObject
+        });
+    };
+
+
+
+    this.editCard = function(card) {
+
+        var cardObject = {
+            id: card.attr("id"),
+            parent_board: card.attr("data-parent-board"),
+            title: card.html().split('<div')[0],
+            status: card.attr("data-status"),
+            order: card.attr("data-order")
+        };
+
+        $.ajax({
+            url: "/details/edit_card",
             type: "POST",
             data: cardObject
         });

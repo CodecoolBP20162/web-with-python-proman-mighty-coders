@@ -1,6 +1,7 @@
 var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
+var dataLayerObj = new dataLayer(handlingDB);
 var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
-var dataLayerObj = new dataLayer(handlingLocalStorage);
+
 
 
 var getID = function() {
@@ -54,10 +55,11 @@ var create = function(title) {
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
     dataLayerObj.saveCard($("#card" + num));
+    location.reload();
 };
 
 var display = function() {
-    dataLayerObj.loadCards();
+    dataLayerObj.loadCards("board" + getID());
 };
 
 $(document).ready(function() {
@@ -100,7 +102,6 @@ $("#edit_card_modal").keypress(function(e) {
             $('#edit_card_button').click();
         };
     };
-    this.show('false')
 });
 
 
@@ -116,18 +117,19 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
         var card = $(cards[i]);
         card.attr('data-order', i + 1);
         card.attr('data-status', this.id);
-        dataLayerObj.removeCard($(cards[i]));
-        dataLayerObj.saveCard($(cards[i]));
+        dataLayerObj.editCard($(cards[i]));
     }
 });
 
 $(document).on("click", "#delete_card", function(event) {
     event.stopPropagation();
     var cardID = $(this).parent().parent().attr('id');
-    console.log(cardID)
-    dataLayerObj.removeCard($("#" + cardID))
-    $(".card").remove()
-    dataLayerObj.loadCards()
+    var confirmed = confirm('Are you sure you want to delete this card?');
+    if (confirmed) {
+        dataLayerObj.removeCard($("#" + cardID));
+        $(".card").remove();
+        dataLayerObj.loadCards("board" + getID())
+    }
 });
 
 $(document).on("click", "#edit_card", function(event) {
@@ -140,9 +142,8 @@ $(document).on("click", "#edit_card", function(event) {
 
 $('#edit_card_button').click(function() {
     var title = $('#edit_card_title').val();
-    var cardID = ($(".modal-body").attr("data-card"))
-    dataLayerObj.removeCard($("#" + cardID))
-    $("#" + cardID).html(title + buttons)
-    dataLayerObj.saveCard($("#" + cardID))
+    var cardID = ($(".modal-body").attr("data-card"));
+    $("#" + cardID).html(title + buttons);
+    dataLayerObj.editCard($("#" + cardID))
 
 });

@@ -48,6 +48,11 @@ class HandleDatabase:
                                   'order': card.order})
         return list_of_cards
 
+    def return_board_title_from_url(self, board_id):
+        board = 'board' + board_id
+        actual_board = Boards.select().where(Boards.board_id == board).get()
+        return actual_board.title
+
     def delete_card(self, id_for_delete, parent_board):
         card_for_delete = Cards.get((Cards.card_id == id_for_delete) & (
             Cards.parent_board == parent_board))

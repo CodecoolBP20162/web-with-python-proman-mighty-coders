@@ -3,7 +3,7 @@
  */
 function handlingDB() {
 
-    this.saveBoard = function(num) {
+    this.saveBoard = function (num) {
         var boardObject = {
             board_id: document.getElementById("board" + num).id,
             title_id: document.getElementById("title" + num).id,
@@ -17,25 +17,29 @@ function handlingDB() {
         });
     };
 
-    this.loadBoards = function() {
+    this.loadBoards = function () {
         $.ajax({
             url: "/boards",
             type: "GET",
-            success: function(response) {
+            success: function (response) {
                 var response_json = JSON.parse(response);
-                for (var i = 0; i < response_json.length; i++) {
-                    var jsonBoard = response_json[i];
-                    var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
-                    newBoard.attr("data-cards", jsonBoard.cards);
-                    newBoard.children().find('#title').prop("id", jsonBoard.title_id);
-                    $("#board_row").append(newBoard);
-                    document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
+                if (response_json.length > 0) {
+                    for (var i = 0; i < response_json.length; i++) {
+                        var jsonBoard = response_json[i];
+                        var newBoard = $(boardTemplate).prop("id", jsonBoard.board_id);
+                        newBoard.attr("data-cards", jsonBoard.cards);
+                        newBoard.children().find('#title').prop("id", jsonBoard.title_id);
+                        $("#board_row").append(newBoard);
+                        document.getElementById(jsonBoard.title_id).innerHTML = jsonBoard.title;
+                    }
+                } else {
+                    $("#board_row").append('<div class="col-sm-12" id="no_boards"><div class="alert alert-info"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>There are no boards in the system. Start working NOW!</div></div>');
                 }
             }
         });
     };
 
-    this.removeBoard = function(id) {
+    this.removeBoard = function (id) {
 
         var boardObject = {
             board_id: id
@@ -47,7 +51,7 @@ function handlingDB() {
         });
     };
 
-    this.editBoard = function(id, title) {
+    this.editBoard = function (id, title) {
 
         var boardObject = {
             board_id: id,
@@ -61,7 +65,7 @@ function handlingDB() {
         });
     };
 
-    this.saveCard = function(card) {
+    this.saveCard = function (card) {
         var cardObject = {
             card_id: card.attr("id"),
             title: card.html().split('<div')[0],
@@ -80,7 +84,7 @@ function handlingDB() {
 
     };
 
-    this.orderCards = function(list) {
+    this.orderCards = function (list) {
         list.sort(sort_list);
 
         function sort_list(a, b) {
@@ -88,7 +92,7 @@ function handlingDB() {
         }
     };
 
-    this.removeCard = function(card) {
+    this.removeCard = function (card) {
         var cardObject = {
             card_id: card.attr("id"),
             parent_board: card.attr("data-parent-board")
@@ -101,8 +105,7 @@ function handlingDB() {
     };
 
 
-
-    this.editCard = function(card) {
+    this.editCard = function (card) {
 
         var cardObject = {
             id: card.attr("id"),
@@ -119,18 +122,18 @@ function handlingDB() {
         });
     };
 
-    this.appendToStatus = function(arrayName, selector) {
+    this.appendToStatus = function (arrayName, selector) {
         for (var i = 0; i < arrayName.length; i++) {
             selector.append(arrayName[i]);
         }
     };
 
-    this.loadCards = function(boardID) {
+    this.loadCards = function (boardID) {
 
         $.ajax({
             url: "/details/" + boardID + "/cards",
             type: "GET",
-            success: function(response) {
+            success: function (response) {
                 var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
                 var newArray = [];
                 var progressArray = [];

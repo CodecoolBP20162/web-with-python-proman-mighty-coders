@@ -39,16 +39,20 @@ def edit_board():
 @app.route("/details/<board>", methods=['GET', 'POST'])
 def board_details(board):
     title = board
+    try:
+        page_header_title = handle_db.return_board_title_from_url(board)
+    except:
+        page_header_title = None
     if request.method == 'POST':
 
-        HandleDatabase().card_fill_row(card_id=request.form['card_id'],
+        handle_db.card_fill_row(card_id=request.form['card_id'],
                                        title=request.form['title'],
                                        parent_board=request.form[
                                            'parent_board'],
                                        status=request.form['status'],
                                        order=request.form['order'])
 
-    return render_template('board_details.html', title=title)
+    return render_template('board_details.html', title=title, header_title=page_header_title)
 
 
 @app.route("/details/<parent_board>/cards", methods=['GET', 'POST'])

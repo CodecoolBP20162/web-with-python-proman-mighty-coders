@@ -152,6 +152,13 @@ body {
     color: white;
 }
 
+.glyphicon-trash:hover {
+    color: red;
+}
+.glyphicon-pencil:hover {
+    color: yellow;
+}
+
 #delete_board {
     left: 73%;
 }

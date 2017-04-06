@@ -103,6 +103,6 @@ $('#edit_board_button').click(function () {
     var title = $('#edit_board_title').val();
     var boardID = ($(".modal-body").attr("data-board"));
     $("#" + boardID).find("h3").html(title);
-    edit_title = $('#edit_board_title').val();
+    var edit_title = $('#edit_board_title').val();
     dataLayerObj.editBoard(boardID, edit_title)
 });

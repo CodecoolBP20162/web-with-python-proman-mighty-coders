@@ -39,7 +39,7 @@ function handlingLocalStorage() {
     };
 
     this.editBoard = function(id, title) {
-        var new_id = id.substr(5, 6)
+        var new_id = id.substr(5, 6);
         this.saveBoard(new_id, title);
     };
 

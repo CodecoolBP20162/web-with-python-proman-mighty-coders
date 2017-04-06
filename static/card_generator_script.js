@@ -55,6 +55,7 @@ var create = function(title) {
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
     dataLayerObj.saveCard($("#card" + num));
+
 };
 
 var display = function() {
@@ -123,9 +124,12 @@ $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
 $(document).on("click", "#delete_card", function(event) {
     event.stopPropagation();
     var cardID = $(this).parent().parent().attr('id');
-    dataLayerObj.removeCard($("#" + cardID))
-    $(".card").remove()
-    dataLayerObj.loadCards("board" + getID())
+    var confirmed = confirm('Are you sure you want to delete this card?');
+    if (confirmed) {
+        dataLayerObj.removeCard($("#" + cardID));
+        $(".card").remove();
+        dataLayerObj.loadCards("board" + getID())
+    }
 });
 
 $(document).on("click", "#edit_card", function(event) {
@@ -138,8 +142,8 @@ $(document).on("click", "#edit_card", function(event) {
 
 $('#edit_card_button').click(function() {
     var title = $('#edit_card_title').val();
-    var cardID = ($(".modal-body").attr("data-card"))
-    $("#" + cardID).html(title + buttons)
+    var cardID = ($(".modal-body").attr("data-card"));
+    $("#" + cardID).html(title + buttons);
     dataLayerObj.editCard($("#" + cardID))
 
 });

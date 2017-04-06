@@ -52,7 +52,7 @@ function handlingDB() {
         var boardObject = {
             board_id: id,
             board_title: title
-        }
+        };
 
         $.ajax({
             url: "/edit_board",
@@ -75,7 +75,7 @@ function handlingDB() {
         $.ajax({
             url: url,
             type: "POST",
-            data: cardObject,
+            data: cardObject
         });
 
     };
@@ -92,7 +92,7 @@ function handlingDB() {
         var cardObject = {
             card_id: card.attr("id"),
             parent_board: card.attr("data-parent-board")
-        }
+        };
         $.ajax({
             url: '/details/delete_card',
             type: "POST",
@@ -154,8 +154,8 @@ function handlingDB() {
                     } else if (newCard.attr("data-status") === "done") {
                         doneArray.push(newCard);
                     }
-                };
-                var list_handler = new handlingDB()
+                }
+                var list_handler = new handlingDB();
                 list_handler.orderCards(newArray);
                 list_handler.orderCards(progressArray);
                 list_handler.orderCards(reviewArray);
@@ -168,4 +168,4 @@ function handlingDB() {
             }
         });
     };
-};
+}

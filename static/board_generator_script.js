@@ -7,7 +7,7 @@ var boardTemplate = '<div class="col-sm-3" id="board0" data-cards="null"><div cl
 var dataLayerObj = new dataLayer(handlingDB);
 
 
-var create = function(title) {
+var create = function (title) {
     var num;
     if ($(".board")[0]) {
         num = parseInt($(".col-sm-3:last").attr("id").match(/\d+/)) + 1;
@@ -27,78 +27,81 @@ var create = function(title) {
     dataLayerObj.saveBoard(num);
 };
 
-var display = function() {
+var display = function () {
     dataLayerObj.loadBoards();
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     display();
     $('#save_board_button').attr("disabled", "disabled");
 });
 
-$('.modal').on('shown.bs.modal', function() {
+$('.modal').on('shown.bs.modal', function () {
     $(this).find('[autofocus]').focus();
 });
 
-$('#save_board_button').click(function() {
+$('#save_board_button').click(function () {
     var title = $('#new_board_title').val();
     create(title);
 });
 
-$('#new_board_title').keydown(function() {
+$('#new_board_title').keydown(function () {
     if ($('#new_board_title').val().length > 0) {
 
         $('#save_board_button').removeAttr("disabled");
     }
 });
 
-$("#create_board_modal").on("hidden.bs.modal", function() {
+$("#create_board_modal").on("hidden.bs.modal", function () {
     $('#new_board_title').val('');
     $('#save_board_button').attr("disabled", "disabled");
 });
 
-$("#create_board_modal").keypress(function(e) {
+$("#create_board_modal").keypress(function (e) {
     if ($('#new_board_title').val().length > 0) {
         if (e.which == 13) {
             $('#save_board_button').click();
-        };
-    };
+        }
+    }
 });
 
-$("#edit_board_modal").keypress(function(e) {
+$("#edit_board_modal").keypress(function (e) {
     if ($('#edit_board_title').val().length > 0) {
         if (e.which == 13) {
             $('#edit_board_button').click();
-        };
-    };
+        }
+    }
 });
 
-$(document).on("click", ".board", function() {
+$(document).on("click", ".board", function () {
     var boardID = $(this).parent().attr('id');
     boardID = boardID.replace('board', '');
     location.href = '/details/' + boardID;
 });
 
 
-$(document).on("click", "#delete_board", function(event) {
+$(document).on("click", "#delete_board", function (event) {
     event.stopPropagation();
     var boardID = $(this).parent().parent().parent().attr('id');
-    dataLayerObj.removeBoard(boardID)
-    $(".col-sm-3").remove()
-    dataLayerObj.loadBoards()
+    var confirmed = confirm('Are you sure you want to delete this board?');
+    if (confirmed) {
+        dataLayerObj.removeBoard(boardID);
+        $(".col-sm-3").remove();
+        dataLayerObj.loadBoards()
+    }
 });
 
-$(document).on("click", "#edit_board", function(event) {
+$(document).on("click", "#edit_board", function (event) {
     event.stopPropagation();
     var editBoardID = $(this).parent().parent().parent().attr('id');
-    $("#edit_board_title").val($(this).parent().parent().find("h3").html())
+    $("#edit_board_title").val($(this).parent().parent().find("h3").html());
     $(".modal-body").attr("data-board", editBoardID)
 });
 
-$('#edit_board_button').click(function() {
+$('#edit_board_button').click(function () {
     var title = $('#edit_board_title').val();
-    var boardID = ($(".modal-body").attr("data-board"))
-    $("#" + boardID).find("h3").html(title)
-    edit_title = $('#edit_board_title').val()
+    var boardID = ($(".modal-body").attr("data-board"));
+    $("#" + boardID).find("h3").html(title);
+    edit_title = $('#edit_board_title').val();
     dataLayerObj.editBoard(boardID, edit_title)
 });

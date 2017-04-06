@@ -131,7 +131,8 @@ $(document).on("click", "#delete_card", function(event) {
     if (confirmed) {
         dataLayerObj.removeCard($("#" + cardID));
         $(".card").remove();
-        dataLayerObj.loadCards("board" + getID())
+        dataLayerObj.loadCards("board" + getID());
+        location.reload();
     }
 });
 

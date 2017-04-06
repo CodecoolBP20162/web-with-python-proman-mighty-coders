@@ -87,7 +87,8 @@ $(document).on("click", "#delete_board", function (event) {
     if (confirmed) {
         dataLayerObj.removeBoard(boardID);
         $(".col-sm-3").remove();
-        dataLayerObj.loadBoards()
+        dataLayerObj.loadBoards();
+        location.reload();
     }
 });
 

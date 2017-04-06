@@ -1,74 +1,23 @@
-var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="non">Card title</li>';
-var proxyObject = new Proxy(handlingLocalStorage);
+var cardTemplate = '<li class="card" id="card0" data-parent-board="parent_board" data-status="new" data-order="none">Card title</li>';
+var dataLayerObj = new dataLayer(handlingDB);
+var buttons = '<div class="edit-delete-wrapper" id="card-icons"><span class="glyphicon glyphicon-trash" id="delete_card" title="Delete cards"></span><span class="glyphicon glyphicon-pencil" id="edit_card" title="Edit cards" data-toggle="modal" data-target="#edit_card_modal"></span></div>'
+
 
 
 var getID = function() {
-    var titleData = document.getElementById("boardData").innerHTML;
-    var boardID = titleData.substring(0, titleData.indexOf('%'));
+    var titleData = window.location.pathname;
+    var boardID = titleData.slice(9);
     return boardID
 };
 
 var formatTitle = function() {
-    var forDelete = getID() + '%';
-    var titleData = document.getElementById("boardData").innerHTML;
-    var newTitle = titleData.replace(forDelete, "");
-    document.getElementById("boardCardsTitle").innerHTML = newTitle;
-};
-
-
-function handlingLocalStorage() {
-    this.save = function(card) {
-        var cardObject = {
-            card_id: card.attr("id"),
-            title: card.html(),
-            parent_board: card.attr("data-parent-board"),
-            status: card.attr("data-status"),
-            order: card.attr("data-order")
-        };
-        var jsonCard = JSON.stringify(cardObject);
-        localStorage.setItem(cardObject.parent_board.substring(5, 7) + cardObject.card_id, jsonCard);
-    };
-
-    this.load = function() {
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i).includes(getID().substring(5, 7) + "card")) {
-                    var importCard = localStorage.getItem(localStorage.key(i));
-                    var cardObject = JSON.parse(importCard);
-                    var newCard = $(cardTemplate);
-                    newCard.attr("id", cardObject.card_id);
-                    newCard.attr("data-parent-board", cardObject.parent_board);
-                    newCard.attr("data-status", cardObject.status);
-                    newCard.attr("data-order", cardObject.order);
-                    newCard.html(cardObject.title);
-                    if (newCard.attr("data-status") === "new") {
-                        $("#new").append(newCard);
-                    } else if (newCard.attr("data-status") === "in_progress") {
-                        $("#in_progress").append(newCard);
-                    } else if (newCard.attr("data-status") === "review") {
-                        $("#review").append(newCard);
-                    } else {
-                        $("#done").append(newCard);
-                    }
-
-                }
-            }
-        } else {
-            $("#boardCardsTitle").append('<div class="col-sm-12" id="no_cards">There are no cards in this board. Start working NOW!</div>');
+    for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i).includes(getID())) {
+            var importBoard = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            document.getElementById("boardCardsTitle").innerHTML = importBoard.title
         }
     }
-}
-
-function Proxy(currentObject) {
-    this.imp = new currentObject();
-    this.proxySave = function(card) {
-        this.imp.save(card)
-    };
-    this.proxyLoad = function() {
-        this.imp.load()
-    };
-}
-
+};
 
 var searchMaxId = function(element, checkNumberFrom) {
     var allElements = document.getElementsByClassName(element);
@@ -82,7 +31,6 @@ var searchMaxId = function(element, checkNumberFrom) {
     return maxId
 };
 
-
 var create = function(title) {
     var num;
     var order;
@@ -90,37 +38,38 @@ var create = function(title) {
         var maxId = searchMaxId("card", 4);
         num = maxId + 1;
         order = parseInt($("#new").children().last().attr("data-order")) + 1;
-
+        if (isNaN(order)) {
+            order = 1;
+        }
     } else {
         $("#no_cards").remove();
-        num = 1
-        order = 1
+        num = 1;
+        order = 1;
     }
     if (num < 10) {
-        num = "0" + num
+        num = "0" + num;
     }
     var newCard = $(cardTemplate);
     newCard.attr("id", "card" + num);
     newCard.attr("data-order", order);
     var parentBoard = getID();
     newCard.attr("data-parent-board", parentBoard);
-    newCard.html(title);
+    newCard.html(title + buttons);
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
-    proxyObject.proxySave($("#card" + num));
+    dataLayerObj.saveCard($("#card" + num));
+    location.reload();
 };
-
 
 var display = function() {
-    proxyObject.proxyLoad();
+    dataLayerObj.loadCards("board" + getID());
 };
 
-
 $(document).ready(function() {
+    formatTitle();
     display();
     $('#save_card_button').attr("disabled", "disabled");
 });
-
 
 $('.modal').on('shown.bs.modal', function() {
     $(this).find('[autofocus]').focus();
@@ -142,25 +91,63 @@ $("#create_card_modal").on("hidden.bs.modal", function() {
     $('#save_card_button').attr("disabled", "disabled");
 });
 
+$("#create_card_modal").keypress(function(e) {
+    if ($('#new_card_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#save_card_button').click();
+        };
+    };
+});
+
+$("#edit_card_modal").keypress(function(e) {
+    if ($('#edit_card_title').val().length > 0) {
+        if (e.which == 13) {
+            $('#edit_card_button').click();
+        };
+    };
+});
+
+
 $(function() {
     $("#new, #in_progress, #review, #done").sortable({
         connectWith: ".status_list"
     }).disableSelection();
 });
 
-
 $(".status_list").sortable().droppable().on('sortreceive sortstop', function() {
-    cards = this.getElementsByClassName("card");
+    var cards = this.getElementsByClassName("card");
     for (var i = 0; i < cards.length; ++i) {
-        card = $(cards[i])
-        card.attr('data-order', i + 1)
+        var card = $(cards[i]);
+        card.attr('data-order', i + 1);
         card.attr('data-status', this.id);
-        console.log(card.attr('data-order'))
-        parent_board = card.attr('data-parent-board').substring(5, 7) + card.attr('id')
-        localStorage.removeItem(card.attr('data-parent-board').substring(5, 7) + card.attr('id'));
-        proxyObject.proxySave($(cards[i]));
-        console.log(cards[i].getAttribute("data-status"));
-    };
+        dataLayerObj.editCard($(cards[i]));
+    }
 });
 
-formatTitle();
+$(document).on("click", "#delete_card", function(event) {
+    event.stopPropagation();
+    var cardID = $(this).parent().parent().attr('id');
+    var confirmed = confirm('Are you sure you want to delete this card?');
+    if (confirmed) {
+        dataLayerObj.removeCard($("#" + cardID));
+        $(".card").remove();
+        dataLayerObj.loadCards("board" + getID());
+        location.reload();
+    }
+});
+
+$(document).on("click", "#edit_card", function(event) {
+    event.stopPropagation();
+    var editCardID = $(this).parent().parent().attr('id');
+    $("#edit_card_title").val($(this).parent().parent().html().split('<div')[0]);
+    $(".modal-body").attr("data-card", editCardID);
+});
+
+
+$('#edit_card_button').click(function() {
+    var title = $('#edit_card_title').val();
+    var cardID = ($(".modal-body").attr("data-card"));
+    $("#" + cardID).html(title + buttons);
+    dataLayerObj.editCard($("#" + cardID))
+
+});

@@ -39,7 +39,7 @@ function handlingDB() {
 
         var boardObject = {
             board_id: id
-        }
+        };
         $.ajax({
             url: "/delete_board",
             type: "POST",

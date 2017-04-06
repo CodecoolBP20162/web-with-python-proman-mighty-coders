@@ -55,7 +55,7 @@ var create = function(title) {
     $("#new").append(newCard);
     $(".status_list").sortable("refresh");
     dataLayerObj.saveCard($("#card" + num));
-
+    location.reload();
 };
 
 var display = function() {

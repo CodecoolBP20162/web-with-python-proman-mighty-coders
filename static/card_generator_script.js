@@ -38,6 +38,9 @@ var create = function(title) {
         var maxId = searchMaxId("card", 4);
         num = maxId + 1;
         order = parseInt($("#new").children().last().attr("data-order")) + 1;
+        if (isNaN(order)) {
+            order = 1;
+        }
     } else {
         $("#no_cards").remove();
         num = 1;
